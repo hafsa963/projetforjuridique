@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,8 +25,9 @@ public class SocieteVo {
     private Long ip;
     private Long cnss;
     private String propriete;
+    private List<ManagerVo> managerVoList = new ArrayList<>();
 
-    public SocieteVo(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete) {
+    public SocieteVo(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<ManagerVo> managerVoList) {
         this.nom = nom;
         this.forme = forme;
         this.capitale = capitale;
@@ -35,5 +38,6 @@ public class SocieteVo {
         this.ip = ip;
         this.cnss = cnss;
         this.propriete = propriete;
+        this.managerVoList=managerVoList;
     }
 }

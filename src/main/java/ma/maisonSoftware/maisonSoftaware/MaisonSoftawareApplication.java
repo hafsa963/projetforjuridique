@@ -97,10 +97,14 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 		userService.save(admin);
 		userService.save(chef);
 		userService.save(superadmin);
-		iSocieteService.save(new SocieteVo("nom1", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2"));
-		iSocieteService.save(new SocieteVo("nom2", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3"));
+		ManagerVo managerVo = new ManagerVo("manager1");
+		ManagerVo managerVo1 = new ManagerVo("manager2");
 
+		iSocieteService.save(new SocieteVo("nom1", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
+		iSocieteService.save(new SocieteVo("nom2", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
+        SocieteVo societeVo = new SocieteVo("nom3","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));
 
+       iSocieteService.save(societeVo);
 
 //		PrestationVo prestationVo = new PrestationVo("test");
 //	iPrestationService.save(prestationVo);

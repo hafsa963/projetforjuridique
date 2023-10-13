@@ -1,5 +1,6 @@
   package ma.maisonSoftware.maisonSoftaware.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,7 +47,8 @@ public class Societe implements Serializable {
 
     @Column(name = "propriete_Societe",nullable = false)
     private String propriete;
-   @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE )
    private List<Manager> managers = new ArrayList<>();
 
     public Societe(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<Manager> managers) {

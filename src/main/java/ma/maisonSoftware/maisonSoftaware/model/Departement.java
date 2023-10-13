@@ -28,7 +28,5 @@ public class Departement implements Serializable {
         this.depatrementTypeEnum = depatrementTypeEnum;
     }
 
-    //    @JoinColumn(name = "prestation_id",nullable = false)
-//    @ManyToOne(fetch = FetchType.LAZY)}
-//  Prestaation prestaation;
+
 }

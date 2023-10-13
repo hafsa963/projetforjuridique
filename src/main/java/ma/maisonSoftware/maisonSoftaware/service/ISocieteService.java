@@ -11,6 +11,7 @@ public interface ISocieteService {
     void save(SocieteVo societeVo);
     SocieteVo getSocieteById(Long id);
     void delete(Long id);
+    void deleteManager(Long id);
 //    List<SocieteVo> findBySociete(String societe);
 
     List<SocieteVo> findAll(int pageId, int size);
@@ -18,4 +19,5 @@ public interface ISocieteService {
     SocieteVo findByNom(String name);
 
     SocieteVo findByRc(Long rc);
+    void update(SocieteVo societeVo);
 }

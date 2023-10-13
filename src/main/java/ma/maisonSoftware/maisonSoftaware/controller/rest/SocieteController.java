@@ -72,5 +72,12 @@ public class SocieteController {
         return iSocieteService.sortBy(fieldName);
     }
 
+    @DeleteMapping(value = "admin/deleteManager/{id}")
+    public ResponseEntity<Object> deleteManager(@PathVariable(name = "id") long managerId){
+        iSocieteService.deleteManager(managerId);
+        return new ResponseEntity<>("manager is deleted successsfully", HttpStatus.OK);
+
+    }
+
 
 }

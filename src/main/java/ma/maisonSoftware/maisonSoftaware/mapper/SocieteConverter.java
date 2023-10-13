@@ -19,6 +19,7 @@ public class SocieteConverter {
          societeVo.setIp(societe.getIp());
          societeVo.setCnss(societe.getCnss());
          societeVo.setPropriete(societe.getPropriete());
+         societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
          return societeVo;
     }
      public static Societe toBo(SocieteVo societeVo){
@@ -34,6 +35,7 @@ public class SocieteConverter {
           toBo.setIp(societeVo.getIp());
           toBo.setCnss(societeVo.getCnss());
           toBo.setPropriete(societeVo.getPropriete());
+          toBo.setManagers(ManagerConverter.toBoList(societeVo.getManagerVoList()));
           return toBo;
      }
      public static List<SocieteVo> toListVo(List<Societe> listBo) {
@@ -42,5 +44,12 @@ public class SocieteConverter {
                listVo.add(toVo(societe));
           }
           return listVo;
+     }
+     public static List<Societe> toListBo(List<SocieteVo> listVo) {
+          List<Societe> ListBo = new ArrayList<>();
+          for (SocieteVo societeVo : listVo) {
+               ListBo.add(toBo(societeVo));
+          }
+          return ListBo;
      }
 }

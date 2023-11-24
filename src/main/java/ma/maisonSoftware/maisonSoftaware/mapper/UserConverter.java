@@ -18,6 +18,12 @@ public class UserConverter {
         vo.setId(bo.getId());
         vo.setUsername(bo.getUsername());
         vo.setPassword(bo.getPassword());
+        vo.setConfirmPassword(bo.getConfirmPassword());
+        vo.setNom(bo.getNom());
+        vo.setPrenom(bo.getPrenom());
+        vo.setEmailPro(bo.getEmailPro());
+        vo.setPoste(bo.getPoste());
+
 
         vo.setRoles(RoleConverter.toVoList(bo.getRoles()));
         vo.setAccountNonExpired(bo.isAccountNonExpired());
@@ -51,6 +57,12 @@ public class UserConverter {
         bo.setId(vo.getId());
         bo.setUsername(vo.getUsername());
         bo.setPassword(vo.getPassword());
+        bo.setConfirmPassword(vo.getConfirmPassword());
+        bo.setPrenom(vo.getPrenom());
+        bo.setNom(vo.getNom());
+        bo.setEmailPro(vo.getEmailPro());
+        bo.setPoste(vo.getPoste());
+
         bo.setRoles(RoleConverter.toBoList(vo.getRoles()));
         bo.setRoles(RoleConverter.toBoList(vo.getRoles()));
         bo.setAccountNonExpired(vo.isAccountNonExpired());

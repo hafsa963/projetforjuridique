@@ -10,8 +10,8 @@ import java.util.List;
 
   @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+  @Setter
+  @Getter
 public class Societe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Societe implements Serializable {
     @Column(name = "seige_Societe")
     private String siege;
 
-    @Column(unique = true,nullable = false,name = "Rc_Societe")
+   @Column(unique = true,nullable = false,name = "Rc_Societe")
     private Long rc;
 
     @Column(name = "if_Societe")
@@ -47,21 +47,31 @@ public class Societe implements Serializable {
 
     @Column(name = "propriete_Societe",nullable = false)
     private String propriete;
+
+    @Column(name = "etat")
+    private String etat ;
+
     @JsonIgnore
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE )
    private List<Manager> managers = new ArrayList<>();
 
-    public Societe(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<Manager> managers) {
-        this.nom = nom;
-        this.forme = forme;
-        this.capitale = capitale;
-        this.siege = siege;
-        this.rc = rc;
-        this.i_f = i_f;
-        this.ice = ice;
-        this.ip = ip;
-        this.cnss = cnss;
-        this.propriete = propriete;
-        this.managers=  managers;
-    }
-}
+      @JsonIgnore
+      @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
+      private List<Prestation> prestations = new ArrayList<>();
+      public Societe(Long id, String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String etat, List<Manager> managers, List<Prestation> prestations) {
+          this.id = id;
+          this.nom = nom;
+          this.forme = forme;
+          this.capitale = capitale;
+          this.siege = siege;
+          this.rc = rc;
+          this.i_f = i_f;
+          this.ice = ice;
+          this.ip = ip;
+          this.cnss = cnss;
+          this.propriete = propriete;
+          this.etat = etat;
+          this.managers = managers;
+          this.prestations = prestations;
+      }
+  }

@@ -91,20 +91,26 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 		userService.save(roleSuperAdmin);
 		userService.save(roleAdmin);
 		userService.save(roleChef);
-		UserVo admin = new UserVo("admin1", "admin1", Arrays.asList(roleAdmin), true, true, true, true);
-		UserVo superadmin = new UserVo("superadmin1", "superadmin1", Arrays.asList(roleSuperAdmin), true, true, true, true);
-		UserVo chef = new UserVo("chef1", "chef1", Arrays.asList(roleChef), true, true, true, true);
+//		UserVo admin = new UserVo("admin1", "admin1", Arrays.asList(roleAdmin), true, true, true, true);
+		UserVo admin = new UserVo("adminbenis","beniss","reda","beniss@gmail","directeur","adminadmin","adminadmin",Arrays.asList(roleAdmin),true,true,true,true);
+
+		/*UserVo superadmin = new UserVo("superadmin1", "superadmin1", Arrays.asList(roleSuperAdmin), true, true, true, true);
+		UserVo chef = new UserVo("chef1", "chef1", Arrays.asList(roleChef), true, true, true, true);*/
 		userService.save(admin);
-		userService.save(chef);
-		userService.save(superadmin);
-		ManagerVo managerVo = new ManagerVo("manager1");
-		ManagerVo managerVo1 = new ManagerVo("manager2");
+	/*	userService.save(chef);
+		userService.save(superadmin);*/
 
-		iSocieteService.save(new SocieteVo("nom1", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
-		iSocieteService.save(new SocieteVo("nom2", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
-        SocieteVo societeVo = new SocieteVo("nom3","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));
+		/*SocieteVo societeVo = new SocieteVo("deloitte","forme3","10000dh","seige3", 76L, 87555L, 766L, 665L, 877L,"prop44","en cours",null);
+		SocieteVo societeVo1 = new SocieteVo("IBM","forme3","10000dh","seige3", 7L, 555L, 726L, 5L, 327L,"prop44","en cours",null);
+		SocieteVo societeVo2 = new SocieteVo("inside","forme3","10000dh","seige3", 6L, 8755L, 866L, 65L, 8234L,"prop44","en cours",null);
+		 iSocieteService.save(societeVo);
+		iSocieteService.save(societeVo1);
+		iSocieteService.save(societeVo2);*/
+	/*	iSocieteService.save(new SocieteVo("inside tech", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
+		iSocieteService.save(new SocieteVo("IBM", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
+        SocieteVo societeVo = new SocieteVo("deloitte","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));*/
 
-       iSocieteService.save(societeVo);
+
 
 //		PrestationVo prestationVo = new PrestationVo("test");
 //	iPrestationService.save(prestationVo);

@@ -1,12 +1,9 @@
 package ma.maisonSoftware.maisonSoftaware.service;
 
 import ma.maisonSoftware.maisonSoftaware.dao.ManagerRepository;
+import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.SocieteRepository;
-import ma.maisonSoftware.maisonSoftaware.mapper.EtapeConverter;
-import ma.maisonSoftware.maisonSoftaware.mapper.ManagerConverter;
-import ma.maisonSoftware.maisonSoftaware.mapper.SocieteConverter;
-import ma.maisonSoftware.maisonSoftaware.mapper.SocieteVo;
-import ma.maisonSoftware.maisonSoftaware.model.Etape;
+import ma.maisonSoftware.maisonSoftaware.mapper.*;
 import ma.maisonSoftware.maisonSoftaware.model.Manager;
 import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 import ma.maisonSoftware.maisonSoftaware.model.Societe;
@@ -14,9 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +30,9 @@ import java.util.Optional;
 public class ISocieteServiceImpl implements ISocieteService {
     @Autowired
     SocieteRepository societeRepository;
+
+    @Autowired
+    PrestationRepository prestationRepository;
     @Autowired
     ManagerRepository managerRepository;
     @Override
@@ -34,15 +41,176 @@ public class ISocieteServiceImpl implements ISocieteService {
         return SocieteConverter.toListVo(societeRepository.findAll());
     }
 
+
+    @Override
+    public void calculateMandatDurationInYears(ManagerVo managerVo) {
+        if (managerVo == null) {
+            throw new IllegalArgumentException("ManagerVo cannot be null");
+        }
+
+        if (managerVo.getDatedebut() == null || managerVo.getDateFin() == null) {
+            throw new IllegalArgumentException("ManagerVo dates must be initialized");
+        }
+
+        LocalDate debutLocalDate = managerVo.getDatedebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate finLocalDate = managerVo.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        long years = ChronoUnit.YEARS.between(debutLocalDate, finLocalDate);
+
+        String result;
+        if (years > 0) {
+            result = years + " years";
+        } else {
+            result = "0";
+        }
+
+        managerVo.setMandatGerance(result);
+    }
+
+
+
+  /* @Override
+   public void save(SocieteVo societeVo) {
+       Societe societe = societeRepository.save(SocieteConverter.toBo(societeVo));
+       for (ManagerVo managerVo : societeVo.getManagerVoList()) {
+           calculateMandatDurationInYears(managerVo);
+           Manager manager = ManagerConverter.bo(managerVo);
+           manager.setSociete(societe);
+           managerRepository.save(manager);
+       }
+   }*/
+
+  /* @Override
+    public void save(SocieteVo societeVo) {
+        Societe societe = SocieteConverter.toBo(societeVo);
+        Societe savedSociete = societeRepository.save(societe);
+        List<Manager> managers = new ArrayList<>();
+        for (ManagerVo managerVo : societeVo.getManagerVoList()) {
+            calculateMandatDurationInYears(managerVo);
+            Manager manager = ManagerConverter.bo(managerVo);
+            manager.setSociete(savedSociete);
+            managers.add(manager);
+        }
+        managerRepository.saveAll(managers);
+    }
+
+   */
+  /*@Override
+  public void save(SocieteVo societeVo) {
+      try {
+          Societe societe = SocieteConverter.toBo(societeVo);
+          Societe savedSociete = societeRepository.save(societe);
+          List<Manager> managers = new ArrayList<>();
+          for (ManagerVo managerVo : societeVo.getManagerVoList()) {
+              calculateMandatDurationInYears(managerVo);
+              Manager manager = ManagerConverter.bo(managerVo);
+              manager.setSociete(savedSociete);
+              managers.add(manager);
+          }
+          managerRepository.saveAll(managers);
+      } catch (Exception e) {
+          // Log the exception and other relevant data
+          System.out.println("An error occurred while saving Societe: " + e.getMessage());
+          e.printStackTrace();
+      }
+  }*/
+
     @Override
     public void save(SocieteVo societeVo) {
+        try {
+            Societe societe = SocieteConverter.toBo(societeVo);
+            societe.setPrestations(null);
+            Societe savedSociete = societeRepository.save(societe);
 
-   Societe societe=  societeRepository.save(SocieteConverter.toBo(societeVo));
-    SocieteConverter.toBo(societeVo).getManagers().forEach((a)->{
-        a.setSociete(societe);
-        managerRepository.save(a);
-    });
+
+        } catch (Exception e) {
+             System.out.println("An error occurred while saving Societe: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
+/*    @Override
+    public Societe associateSocietePrestation(long id_Societe, long id){
+
+         Societe societe = societeRepository.findById(id_Societe)
+                 .orElseThrow(() -> new EntityNotFoundException("Societe not found with id: " + id_Societe));
+
+         Prestation prestation = prestationRepository.findById(id)
+                 .orElseThrow(() -> new EntityNotFoundException("prestation not found with id: " + id));
+
+
+         List <Prestation> prestations = new ArrayList<>();
+         prestations.add(prestation);
+        societe.setPrestations(prestations);
+
+        societeRepository.save(societe);
+         return societe;
+
+    }*/
+@Override
+public String associateSocietePrestation(long id_Societe, long id) {
+    try {
+        Societe societe = societeRepository.findById(id_Societe)
+                .orElseThrow(() -> new EntityNotFoundException("Societe not found with id: " + id_Societe));
+
+        Prestation prestation = prestationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Prestation not found with id: " + id));
+
+        societe.getPrestations().add(prestation);
+        prestation.setSociete(societe);
+
+        societeRepository.save(societe);
+
+        return  "Societe is updated with Prestation successfully";
+    } catch (EntityNotFoundException e) {
+        return "Societe or Prestation not found";
+    } catch (Exception e) {
+        return "An error occurred while updating the association";
+    }
+}
+
+
+
+
+    /*  @Override
+      public void save(List<ManagerVo> managerVos) {
+          try {
+              List<Manager> managers = new ArrayList<>();
+              for (ManagerVo managerVo : managerVos) {
+                  calculateMandatDurationInYears(managerVo);
+                  Manager manager = ManagerConverter.bo(managerVo);
+                  managers.add(manager);
+              }
+              managerRepository.saveAll(managers);
+          } catch (Exception e) {
+              // Log the exception and other relevant data
+              System.out.println("An error occurred while saving Manager: " + e.getMessage());
+              e.printStackTrace();
+          }
+      }*/
+  @Override
+  public void save(List<ManagerVo> managerVos, Long societeId) {
+      try {
+          Societe societe = societeRepository.findById(societeId).get(); // Fetch the Societe object using the provided societeId
+          List<Manager> managers = new ArrayList<>();
+          for (ManagerVo managerVo : managerVos) {
+              calculateMandatDurationInYears(managerVo);
+              Manager manager = ManagerConverter.bo(managerVo);
+              manager.setSociete(societe); // Set the societe for each manager
+              managers.add(manager);
+          }
+          managerRepository.saveAll(managers);
+      } catch (Exception e) {
+          // Log the exception and other relevant data
+          System.out.println("An error occurred while saving Manager: " + e.getMessage());
+          e.printStackTrace();
+      }
+  }
+
+
+
+
+
 
     @Override
     public SocieteVo getSocieteById(Long id) {
@@ -93,6 +261,7 @@ public class ISocieteServiceImpl implements ISocieteService {
         Societe societe = societeRepository.findByRc(rc);
         return SocieteConverter.toVo(societe);
     }
+
 
     @Override
     public void update(SocieteVo societeVo) {

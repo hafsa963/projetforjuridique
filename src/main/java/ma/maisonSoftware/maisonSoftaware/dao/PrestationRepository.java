@@ -13,4 +13,11 @@ public interface PrestationRepository extends JpaRepository<Prestation,Long> {
             nativeQuery = true
     )
    Prestation getPrestationByIdEtape(long id);
+
+
+    Prestation findByNamePrestation(String namePrestation);
+
+
+    Prestation findByid(long id);
 }
+

@@ -4,7 +4,11 @@ package ma.maisonSoftware.maisonSoftaware.service;
 import ma.maisonSoftware.maisonSoftaware.mapper.PrivilegeVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.RoleVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.UserVo;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -26,5 +30,15 @@ public interface IUserService extends UserDetailsService {
     List<UserVo> findAll(int pageId, int size);
     //pour le tri
     List<UserVo> sortBy(String fieldName);
+
+    UserVo createcolab(UserVo uservo);
+
+
+
+
+
+    UserDetails  getCurrentUserDetails();
+
+     void configure(HttpSecurity http) throws Exception;
 }
 

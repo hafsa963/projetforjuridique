@@ -13,7 +13,7 @@ public class DocumentMapper {
     public static DocumentDto toDTO(Document entity) {
         DocumentDto dto = new DocumentDto();
         dto.setIdDocument(dto.getIdDocument());
-        dto.setNomDocument(dto.getNomDocument());
+//        dto.setNomDocument(dto.getNomDocument());
         dto.setEtapeDto(EtapeConverter.toDTO((entity.getEtape())));
         return dto;
     }
@@ -21,7 +21,7 @@ public class DocumentMapper {
     public static Document toEntity(DocumentDto dto){
         Document entity = new Document();
         entity.setIdDocument(entity.getIdDocument());
-        entity.setNomDocument(entity.getNomDocument());
+//        entity.setNomDocument(entity.getNomDocument());
         entity.setEtape(EtapeConverter.toEntity((dto.getEtapeDto())));
         return entity;
     }

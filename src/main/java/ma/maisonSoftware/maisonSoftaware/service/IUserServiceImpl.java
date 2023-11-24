@@ -13,13 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 @Service("userService")
@@ -180,9 +190,60 @@ public class IUserServiceImpl implements IUserService {
     }
 
 
+
+
     @Override
+    public UserVo createcolab(UserVo uservo){
+        User user = UserConverter.toBo(uservo);
+        User savedUser =  userRepository1.save(user);
+
+        return UserConverter.toVo(savedUser);
+    }
+
+
+  /*  @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return UserConverter.toVo(userRepository1.findByUsername(username));
+    }*/
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository1.findByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+
+        return UserConverter.toVo(user);
     }
+    @Override
+    public UserDetails  getCurrentUserDetails(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken ) {
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        return (UserDetails) authentication.getPrincipal();
+    }
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .permitAll()
+                .defaultSuccessUrl("/")
+                .and()
+                .httpBasic()
+                .and()
+                .logout()
+                .permitAll();
+    }
+
+   /* private PersistentTokenRepository persistenTokenRepository() {
+
+    }*/
+
 }
 

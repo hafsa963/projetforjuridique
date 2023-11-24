@@ -14,6 +14,8 @@ public class PrestationConverter {
         PrestationVo vo = new  PrestationVo();
         vo.setId(bo.getId());
         vo.setNamePrestation(bo.getNamePrestation());
+        vo.setEtat(bo.getEtat());
+//        vo.setSociete(bo.getSociete());
         vo.setEtapeDtoList(EtapeConverter.toVoList(bo.getEtapes()));
         return vo;
     }
@@ -22,6 +24,8 @@ public class PrestationConverter {
         Prestation bo  = new Prestation();
         bo.setId(vo.getId());
         bo.setNamePrestation(vo.getNamePrestation());
+        bo.setEtat(vo.getEtat());
+       /* bo.setSociete(vo.getSociete());*/
         bo.setEtapes(EtapeConverter.toBoList(vo.getEtapeDtoList()));
 
         return bo;

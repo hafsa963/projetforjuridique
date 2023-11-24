@@ -19,6 +19,12 @@ public class UserVo implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
+    /*@NotEmpty*/
+    private String ConfirmPassword;
+    private String poste;
+    private String prenom;
+    private String Nom;
+    private String EmailPro;
 
     private Boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -30,10 +36,15 @@ public class UserVo implements UserDetails {
 
 
 
-    public UserVo(String username, String password, List<RoleVo> roles, boolean accountNonExpired,
+    public UserVo(String username,String Nom,String prenom ,String EmailPro,String poste , String ConfirmPassword, String password, List<RoleVo> roles, boolean accountNonExpired,
                   boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled) {
         this.username = username;
         this.password = password;
+        this.Nom = Nom;
+        this.prenom = prenom;
+        this.EmailPro = EmailPro;
+        this.poste = poste;
+        this.ConfirmPassword = ConfirmPassword;
         this.roles = roles;
         this.accountNonExpired=accountNonExpired;
         this.accountNonLocked=accountNonLocked;

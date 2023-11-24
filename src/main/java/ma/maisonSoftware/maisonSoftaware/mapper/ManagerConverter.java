@@ -10,6 +10,10 @@ public class ManagerConverter {
         ManagerVo managerVo = new ManagerVo();
         managerVo.setId(bo.getId());
         managerVo.setNameManager(bo.getNameManager());
+        managerVo.setDatedebut(bo.getDatedebut());
+        managerVo.setDateFin(bo.getDateFin());
+        managerVo.setMandatGerance(bo.getMandatGerance());
+
 //        managerVo.setSocieteVo(SocieteConverter.toVo(bo.getSociete()));
         return managerVo;
       }
@@ -17,6 +21,10 @@ public class ManagerConverter {
       public static Manager bo (ManagerVo vo){
         Manager manager = new Manager();
         manager.setNameManager(vo.getNameManager());
+          manager.setDatedebut(vo.getDatedebut());
+          manager.setDateFin(vo.getDateFin());
+          manager.setMandatGerance(vo.getMandatGerance());
+
 //        manager.setSociete(SocieteConverter.toBo(vo.getSocieteVo()));
         return manager;
        }

@@ -20,6 +20,8 @@ public class SocieteConverter {
          societeVo.setCnss(societe.getCnss());
          societeVo.setPropriete(societe.getPropriete());
          societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
+         societeVo.setAttachmentVo(AttachmentConverter.toVo(societe.getAttachmentEntity()));
+//         societeVo.setFile(DataBaseFileConverter.toVo(societe.getFile()));
          return societeVo;
     }
      public static Societe toBo(SocieteVo societeVo){
@@ -36,6 +38,8 @@ public class SocieteConverter {
           toBo.setCnss(societeVo.getCnss());
           toBo.setPropriete(societeVo.getPropriete());
           toBo.setManagers(ManagerConverter.toBoList(societeVo.getManagerVoList()));
+//          toBo.setFile(DataBaseFileConverter.toBo(societeVo.getFile()));
+          toBo.setAttachmentEntity(AttachmentConverter.toBo(societeVo.getAttachmentVo()));
           return toBo;
      }
      public static List<SocieteVo> toListVo(List<Societe> listBo) {

@@ -22,6 +22,7 @@ public class Etape implements Serializable {
     private int idEtape;
 
     private String nomEtape;
+
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "PRESTATION_ID")
 
@@ -32,17 +33,6 @@ public class Etape implements Serializable {
         this.prestation = prestation;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Etape{" +
-//                "idEtape=" + idEtape +
-//                ", nomEtape='" + nomEtape + '\'' +
-//                ", prestation=" + prestation +
-//                '}';
-//    }
 
-    //    @OneToMany
-//    @JoinColumn(name = "DOCUMENT_ID")
-//    private List<Document> document;
 
 }

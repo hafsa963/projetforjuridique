@@ -31,17 +31,18 @@ public class ISocieteServiceImpl implements ISocieteService {
     @Override
     public List<SocieteVo> getAllSociete() {
         List<Societe> getSocietes = societeRepository.findAll();
-        return SocieteConverter.toListVo(societeRepository.findAll());
+        return SocieteConverter.toListVo(getSocietes);
     }
 
     @Override
     public void save(SocieteVo societeVo) {
 
-   Societe societe=  societeRepository.save(SocieteConverter.toBo(societeVo));
-    SocieteConverter.toBo(societeVo).getManagers().forEach((a)->{
-        a.setSociete(societe);
-        managerRepository.save(a);
-    });
+        Societe societe=  societeRepository.save(SocieteConverter.toBo(societeVo));
+        SocieteConverter.toBo(societeVo).getManagers().forEach((a)->{
+            a.setSociete(societe);
+
+            managerRepository.save(a);
+        });
     }
 
     @Override
@@ -60,14 +61,10 @@ public class ISocieteServiceImpl implements ISocieteService {
 
     @Override
     public void deleteManager(Long id) {
-     managerRepository.deleteById(id);
+        managerRepository.deleteById(id);
     }
 
-//    @Override
-//    public List<SocieteVo> findBySociete(String societe) {
-//      List<Societe> societes = societeRepository.findBySociete(societe);
-//      return SocieteConverter.toListVo(societes);
-//    }
+
 
     @Override
     public List<SocieteVo> findAll(int pageId, int size) {
@@ -108,18 +105,18 @@ public class ISocieteServiceImpl implements ISocieteService {
             societe.setI_f(societeVo.getI_f());
             societe.setSiege(societeVo.getSiege());
             societe.setIce(societeVo.getIce());
-           societeVo.getManagerVoList().forEach(manager->{
-               Optional<Manager> optionalManager = managerRepository.findById(manager.getId());
-               if(optionalManager.isPresent()){
-                   optionalManager.get().setNameManager(manager.getNameManager());
-                   optionalManager.get().setSociete(societe);
-                   managerRepository.save(optionalManager.get());
-               }else {
-                   Manager managerEnity = ManagerConverter.bo(manager);
-                   managerEnity.setSociete(societe);
-                   managerRepository.save(managerEnity);
-               }
-           });
+            societeVo.getManagerVoList().forEach(manager->{
+                Optional<Manager> optionalManager = managerRepository.findById(manager.getId());
+                if(optionalManager.isPresent()){
+                    optionalManager.get().setNameManager(manager.getNameManager());
+                    optionalManager.get().setSociete(societe);
+                    managerRepository.save(optionalManager.get());
+                }else {
+                    Manager managerEnity = ManagerConverter.bo(manager);
+                    managerEnity.setSociete(societe);
+                    managerRepository.save(managerEnity);
+                }
+            });
 
         }
 

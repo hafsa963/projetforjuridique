@@ -21,7 +21,7 @@ public class Prestation implements Serializable {
     @Setter
     private long id;
 
-    @Column(name = "NamePrestation")
+    @Column(unique = true,nullable = false,name = "NamePrestation")
     @NotEmpty(message = "* Please provide a prestation name")
     @Getter
     @Setter
@@ -33,10 +33,35 @@ public class Prestation implements Serializable {
     @Setter
     private List<Etape> etapes = new ArrayList<>();
 
-    public Prestation(String namePrestation, List<Etape> etapes) {
+    @Column(name = "Etat")
+
+    @Getter
+    @Setter
+    private String Etat;
+
+    @Getter
+    @Setter
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "societe_id")*/
+    @ManyToOne
+    @JoinColumn(name = "societe_id")
+    private Societe societe;
+
+    public Prestation(String namePrestation, List<Etape> etapes, String etat, Societe societe) {
         this.namePrestation = namePrestation;
         this.etapes = etapes;
+        Etat = etat;
+        this.societe = societe;
     }
+
+
+
+
+
+ /*   public Prestation(String namePrestation, List<Etape> etapes) {
+        this.namePrestation = namePrestation;
+        this.etapes = etapes;
+    }*/
 
 
 

@@ -33,14 +33,17 @@ public class IPrestationServiceImpl implements IPrestationService {
     @Transactional
     @Override
     public void save(PrestationVo vo) {
-        Prestation prestation = prestationRepository.save(PrestationConverter.toBo(vo));
+
+         Prestation prestation = prestationRepository.save(PrestationConverter.toBo(vo));
+        if (prestation.getEtat() == null || prestation.getEtat().trim().isEmpty()) {
+            prestation.setEtat("not affected");
+        }
         PrestationConverter.toBo(vo).getEtapes().forEach(etape -> {
             etape.setPrestation(prestation);
             etapeRepository.save(etape);
         });
 
     }
-
 
     @Transactional
     @Override
@@ -49,6 +52,7 @@ public class IPrestationServiceImpl implements IPrestationService {
         if (optional.isPresent()) {
             Prestation prestation = optional.get();
             prestation.setNamePrestation(vo.getNamePrestation());
+            prestation.setEtat(vo.getEtat());
             /*prestation.getEtapes().forEach(etape -> {
                 if (!vo.getEtapeDtoList().stream().map(EtapeVo::getIdEtape).collect(Collectors.toList()).contains(etape.getIdEtape())){
                   etapeRepository.deleteById(etape.getIdEtape());
@@ -69,6 +73,8 @@ public class IPrestationServiceImpl implements IPrestationService {
         }
 
     }
+
+
 
 
     @Override
@@ -104,4 +110,26 @@ public class IPrestationServiceImpl implements IPrestationService {
     public List<PrestationVo> sortBy(String fielName) {
         return PrestationConverter.toVoListPrestation(prestationRepository.findAll(Sort.by(fielName)));
     }
+
+
+
+    @Override
+    public PrestationVo findByNamePrestation(String namePrestation) {
+
+        Prestation prestation = prestationRepository.findByNamePrestation(namePrestation);
+        return PrestationConverter.toVo(prestation);
+    }
+
+    @Override
+    public PrestationVo findByid(Long id) {
+
+        Prestation prestation = prestationRepository.findByid(id);
+        return PrestationConverter.toVo(prestation);
+    }
+
+    @Override
+    public  PrestationVo getalletapeByPrestation(long id){
+        return  PrestationConverter.toVo(prestationRepository.findByid(id));
+    }
+
 }

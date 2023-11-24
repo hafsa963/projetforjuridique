@@ -8,10 +8,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-  @Entity
+
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Societe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +51,10 @@ public class Societe implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE )
    private List<Manager> managers = new ArrayList<>();
+
+      @OneToOne(fetch = FetchType.LAZY)
+      @JsonIgnore
+      private AttachmentEntity attachmentEntity;
 
     public Societe(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<Manager> managers) {
         this.nom = nom;

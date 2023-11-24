@@ -1,5 +1,7 @@
 package ma.maisonSoftware.maisonSoftaware.service;
 
+import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
+import ma.maisonSoftware.maisonSoftaware.mapper.EtapeVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.PrestationVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.SocieteVo;
 import ma.maisonSoftware.maisonSoftaware.model.Prestation;
@@ -22,6 +24,13 @@ public interface IPrestationService {
     List<PrestationVo> sortBy(String fielName);
 
 
+    PrestationVo findByNamePrestation(String namePrestation);
 
 
+
+    PrestationVo findByid(Long id);
+
+
+    PrestationVo getalletapeByPrestation(long id);
 }
+

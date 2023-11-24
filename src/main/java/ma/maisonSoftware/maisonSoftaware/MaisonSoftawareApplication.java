@@ -20,6 +20,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,46 +69,49 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		PrivilegeVo privilege1 = new PrivilegeVo("create_users");
-		PrivilegeVo privilege2 = new PrivilegeVo("delete_users");
-		PrivilegeVo privilege3 = new PrivilegeVo("update_users");
-		PrivilegeVo privilege4 = new PrivilegeVo("view");
-		PrivilegeVo privilege5 = new PrivilegeVo("pagination_users");
-		PrivilegeVo privilege6 = new PrivilegeVo("sort_users");
-
-
-		RoleVo roleSuperAdmin = new RoleVo("SUPERADMIN");
-		RoleVo roleAdmin = new RoleVo("ADMIN");
-		RoleVo roleChef = new RoleVo("ROLE_USER");
-
-
-		roleSuperAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
-		roleAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
-		roleChef.setPrivileges(Arrays.asList(privilege4));
-		userService.save(privilege1);
-		userService.save(privilege2);
-		userService.save(privilege3);
-		userService.save(privilege4);
-		userService.save(privilege5);
-		userService.save(privilege6);
-		userService.save(roleSuperAdmin);
-		userService.save(roleAdmin);
-		userService.save(roleChef);
-		UserVo admin = new UserVo("admin1", "admin1", Arrays.asList(roleAdmin), true, true, true, true);
-		UserVo superadmin = new UserVo("superadmin1", "superadmin1", Arrays.asList(roleSuperAdmin), true, true, true, true);
-		UserVo chef = new UserVo("chef1", "chef1", Arrays.asList(roleChef), true, true, true, true);
-		userService.save(admin);
-		userService.save(chef);
-		userService.save(superadmin);
-		ManagerVo managerVo = new ManagerVo("manager1");
-		ManagerVo managerVo1 = new ManagerVo("manager2");
-
-		iSocieteService.save(new SocieteVo("nom1", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
-		iSocieteService.save(new SocieteVo("nom2", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
-        SocieteVo societeVo = new SocieteVo("nom3","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));
-
-       iSocieteService.save(societeVo);
-
+//		PrivilegeVo privilege1 = new PrivilegeVo("create_users");
+//		PrivilegeVo privilege2 = new PrivilegeVo("delete_users");
+//		PrivilegeVo privilege3 = new PrivilegeVo("update_users");
+//		PrivilegeVo privilege4 = new PrivilegeVo("view");
+//		PrivilegeVo privilege5 = new PrivilegeVo("pagination_users");
+//		PrivilegeVo privilege6 = new PrivilegeVo("sort_users");
+//
+//
+//
+//		RoleVo roleSuperAdmin = new RoleVo("SUPERADMIN");
+//		RoleVo roleAdmin = new RoleVo("ADMIN");
+//		RoleVo roleChef = new RoleVo("ROLE_USER");
+//
+//
+//		roleSuperAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
+//		roleAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
+//		roleChef.setPrivileges(Arrays.asList(privilege4));
+//		userService.save(privilege1);
+//		userService.save(privilege2);
+//		userService.save(privilege3);
+//		userService.save(privilege4);
+//		userService.save(privilege5);
+//		userService.save(privilege6);
+//		userService.save(roleSuperAdmin);
+//		userService.save(roleAdmin);
+//		userService.save(roleChef);
+//		UserVo admin = new UserVo("admin1", "admin1", Arrays.asList(roleAdmin), true, true, true, true);
+//		UserVo superadmin = new UserVo("superadmin1", "superadmin1", Arrays.asList(roleSuperAdmin), true, true, true, true);
+//		UserVo chef = new UserVo("chef1", "chef1", Arrays.asList(roleChef), true, true, true, true);
+//		userService.save(admin);
+//		userService.save(chef);
+//		userService.save(superadmin);
+//		ManagerVo managerVo = new ManagerVo("manager1");
+//		ManagerVo managerVo1 = new ManagerVo("manager2");
+//
+//		iSocieteService.save(new SocieteVo("nom1", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
+//
+//		iSocieteService.save(new SocieteVo("nom2", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
+//
+//        SocieteVo societeVo = new SocieteVo("nom3","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));
+//
+//       iSocieteService.save(societeVo);
+//
 //		PrestationVo prestationVo = new PrestationVo("test");
 //	iPrestationService.save(prestationVo);
 

@@ -26,6 +26,8 @@ public class SocieteVo {
     private Long cnss;
     private String propriete;
     private List<ManagerVo> managerVoList = new ArrayList<>();
+//    private DataBaseFileVo file;
+    private AttachmentVo attachmentVo;
 
     public SocieteVo(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<ManagerVo> managerVoList) {
         this.nom = nom;
@@ -39,5 +41,6 @@ public class SocieteVo {
         this.cnss = cnss;
         this.propriete = propriete;
         this.managerVoList=managerVoList;
+
     }
 }

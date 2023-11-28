@@ -2,9 +2,6 @@ package ma.maisonSoftware.maisonSoftaware;
 
 import ma.maisonSoftware.maisonSoftaware.dao.EtapeRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
-import ma.maisonSoftware.maisonSoftaware.mapper.*;
-import ma.maisonSoftware.maisonSoftaware.model.Etape;
-import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 //import ma.maisonSoftware.maisonSoftaware.service.EtapeService;
 import ma.maisonSoftware.maisonSoftaware.service.IPrestationService;
 import ma.maisonSoftware.maisonSoftaware.service.ISocieteService;
@@ -18,14 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 @EnableWebMvc
@@ -111,7 +103,7 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 //        SocieteVo societeVo = new SocieteVo("nom3","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));
 //
 //       iSocieteService.save(societeVo);
-//
+
 //		PrestationVo prestationVo = new PrestationVo("test");
 //	iPrestationService.save(prestationVo);
 

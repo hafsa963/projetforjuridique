@@ -129,45 +129,28 @@ public class ISocieteServiceImpl implements ISocieteService {
         }
     }
 
-/*    @Override
-    public Societe associateSocietePrestation(long id_Societe, long id){
 
-         Societe societe = societeRepository.findById(id_Societe)
-                 .orElseThrow(() -> new EntityNotFoundException("Societe not found with id: " + id_Societe));
+    @Override
+    public String associateSocietePrestation(long id_Societe, long id) {
+        try {
+            Societe societe = societeRepository.findById(id_Societe)
+                    .orElseThrow(() -> new EntityNotFoundException("Societe not found with id: " + id_Societe));
 
-         Prestation prestation = prestationRepository.findById(id)
-                 .orElseThrow(() -> new EntityNotFoundException("prestation not found with id: " + id));
+            Prestation prestation = prestationRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Prestation not found with id: " + id));
 
+            societe.getPrestations().add(prestation);
+            prestation.setSociete(societe);
 
-         List <Prestation> prestations = new ArrayList<>();
-         prestations.add(prestation);
-        societe.setPrestations(prestations);
+            societeRepository.save(societe);
 
-        societeRepository.save(societe);
-         return societe;
-
-    }*/
-@Override
-public String associateSocietePrestation(long id_Societe, long id) {
-    try {
-        Societe societe = societeRepository.findById(id_Societe)
-                .orElseThrow(() -> new EntityNotFoundException("Societe not found with id: " + id_Societe));
-
-        Prestation prestation = prestationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Prestation not found with id: " + id));
-
-        societe.getPrestations().add(prestation);
-        prestation.setSociete(societe);
-
-        societeRepository.save(societe);
-
-        return  "Societe is updated with Prestation successfully";
-    } catch (EntityNotFoundException e) {
-        return "Societe or Prestation not found";
-    } catch (Exception e) {
-        return "An error occurred while updating the association";
+            return "Societe is updated with Prestation successfully";
+        } catch (EntityNotFoundException e) {
+            return "Societe or Prestation not found";
+        } catch (Exception e) {
+            return "An error occurred while updating the association";
+        }
     }
-}
 
 
 
@@ -231,11 +214,6 @@ public String associateSocietePrestation(long id_Societe, long id) {
      managerRepository.deleteById(id);
     }
 
-//    @Override
-//    public List<SocieteVo> findBySociete(String societe) {
-//      List<Societe> societes = societeRepository.findBySociete(societe);
-//      return SocieteConverter.toListVo(societes);
-//    }
 
     @Override
     public List<SocieteVo> findAll(int pageId, int size) {

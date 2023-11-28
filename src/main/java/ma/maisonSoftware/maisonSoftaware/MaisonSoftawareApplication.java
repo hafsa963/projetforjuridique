@@ -8,6 +8,7 @@ import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 //import ma.maisonSoftware.maisonSoftaware.service.EtapeService;
 import ma.maisonSoftware.maisonSoftaware.service.IPrestationService;
 import ma.maisonSoftware.maisonSoftaware.service.ISocieteService;
+import ma.maisonSoftware.maisonSoftaware.service.ITypesocieteService;
 import ma.maisonSoftware.maisonSoftaware.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,9 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 
 	@Autowired
 	private ISocieteService iSocieteService;
+	@Autowired
+	private ITypesocieteService iTypesocieteService;
+
 
 //	@Autowired
 //	private EtapeService etapeService;
@@ -78,6 +82,20 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 		RoleVo roleAdmin = new RoleVo("ADMIN");
 		RoleVo roleChef = new RoleVo("ROLE_USER");
 
+		//typeSociete TypesName:
+		TypeSocieteVo typeSocieteVo1 = new TypeSocieteVo( "SARL");
+		TypeSocieteVo typeSocieteVo2 = new TypeSocieteVo( "SARLAU");
+		TypeSocieteVo typeSocieteVo3 = new TypeSocieteVo( "SA");
+		TypeSocieteVo typeSocieteVo4 = new TypeSocieteVo( "Auto Entrepreneur");
+		TypeSocieteVo typeSocieteVo5 = new TypeSocieteVo( "personne phisique");
+		TypeSocieteVo typeSocieteVo6 = new TypeSocieteVo( "personne morale");
+
+		iTypesocieteService.save(typeSocieteVo1);
+		iTypesocieteService.save(typeSocieteVo2);
+		iTypesocieteService.save(typeSocieteVo3);
+		iTypesocieteService.save(typeSocieteVo4);
+		iTypesocieteService.save(typeSocieteVo5);
+		iTypesocieteService.save(typeSocieteVo6);
 
 		roleSuperAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
 		roleAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
@@ -112,8 +130,6 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 
 
 
-//		PrestationVo prestationVo = new PrestationVo("test");
-//	iPrestationService.save(prestationVo);
 
  	}
 }

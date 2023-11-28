@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,13 @@ public class SocieteVo {
     private Long ip;
     private Long cnss;
     private String propriete;
+    private String etat;
     private List<ManagerVo> managerVoList = new ArrayList<>();
-//    private DataBaseFileVo file;
-    private AttachmentVo attachmentVo;
+    private List<PrestationVo>  prestationList = new ArrayList<>();
 
-    public SocieteVo(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<ManagerVo> managerVoList) {
+
+    public SocieteVo( String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String etat, List<ManagerVo> managerVoList, List<PrestationVo> prestationList) {
+
         this.nom = nom;
         this.forme = forme;
         this.capitale = capitale;
@@ -40,7 +43,8 @@ public class SocieteVo {
         this.ip = ip;
         this.cnss = cnss;
         this.propriete = propriete;
-        this.managerVoList=managerVoList;
-
+        this.etat = etat;
+        this.managerVoList = managerVoList;
+        this.prestationList = prestationList;
     }
 }

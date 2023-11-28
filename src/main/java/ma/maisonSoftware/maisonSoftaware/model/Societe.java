@@ -1,4 +1,4 @@
-  package ma.maisonSoftware.maisonSoftaware.model;
+package ma.maisonSoftware.maisonSoftaware.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -8,11 +8,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
+@NoArgsConstructor
+@Setter
+@Getter
 public class Societe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,15 +47,19 @@ public class Societe implements Serializable {
 
     @Column(name = "propriete_Societe",nullable = false)
     private String propriete;
+
+    @Column(name = "etat")
+    private String etat ;
+
     @JsonIgnore
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE )
-   private List<Manager> managers = new ArrayList<>();
+    private List<Manager> managers = new ArrayList<>();
 
-      @OneToOne(fetch = FetchType.LAZY)
-      @JsonIgnore
-      private AttachmentEntity attachmentEntity;
-
-    public Societe(String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete,List<Manager> managers) {
+    @JsonIgnore
+    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
+    private List<Prestation> prestations = new ArrayList<>();
+    public Societe(Long id, String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String etat, List<Manager> managers, List<Prestation> prestations) {
+        this.id = id;
         this.nom = nom;
         this.forme = forme;
         this.capitale = capitale;
@@ -67,6 +70,8 @@ public class Societe implements Serializable {
         this.ip = ip;
         this.cnss = cnss;
         this.propriete = propriete;
-        this.managers=  managers;
+        this.etat = etat;
+        this.managers = managers;
+        this.prestations = prestations;
     }
 }

@@ -7,7 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface AttachmentService {
-    AttachmentVo uploadfile(Long id,MultipartFile file) throws IOException;
+    AttachmentVo uploadFile(Long id, MultipartFile file);
+
     byte[] downloadFile(String fileName) throws IOException;
 
 }

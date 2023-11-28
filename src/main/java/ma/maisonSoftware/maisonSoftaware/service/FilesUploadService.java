@@ -26,7 +26,7 @@ public class FilesUploadService {
         this.rootLocation = Paths.get(uploadDir);
     }
 
-    public void uploadFile(final MultipartFile file, final String path) {
+    public void uploadFile(final MultipartFile file, final String path)  {
 
         if (path == null) {
             throw new BusinessException("path not found");

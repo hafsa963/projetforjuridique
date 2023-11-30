@@ -4,7 +4,10 @@ import ma.maisonSoftware.maisonSoftaware.dao.ClientRepository;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientConverter;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
 import ma.maisonSoftware.maisonSoftaware.model.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,20 +19,21 @@ import java.util.Optional;
 @Transactional
 public class IClientServiceImpl  implements IClientService  {
 
+    private static final Logger logger = LoggerFactory.getLogger(IClientServiceImpl.class);
+
     @Autowired
     ClientRepository clientRepository;
 
 
+    @Transactional
    @Override
     public void save(ClientVo clientVo) {
         try {
             Client client = ClientConverter.toBo(clientVo);
             Client savedClient = clientRepository.save(client);
-
-
-        } catch (Exception e) {
-            System.out.println("An error occurred while saving Societe: " + e.getMessage());
-            e.printStackTrace();
+        } catch (DataAccessException e) {
+            logger.error("An error occurred while saving client", e);
+            throw e;
         }
     }
 
@@ -57,10 +61,7 @@ public class IClientServiceImpl  implements IClientService  {
         return null;
     }
 
-    @Override
-    public ClientVo findByRc(Long rc) {
-        return null;
-    }
+
 
     @Override
     public void update(ClientVo clientVo) {
@@ -81,21 +82,16 @@ public class IClientServiceImpl  implements IClientService  {
             client.setPropriete(clientVo.getPropriete());
             client.setCmt(clientVo.getCmt());
             client.setAdresse(clientVo.getAdresse());
-            client.setContact(clientVo.getContact());
             client.setComplement(clientVo.getComplement());
             client.setCtNum(clientVo.getCtNum());
-            client.setCodePostal(clientVo.getCodePostal());
-            client.setCodeRegion(clientVo.getCodeRegion());
-            client.setEMail(clientVo.getEMail());
-            client.setFacebook(clientVo.getFacebook());
-            client.setSite(clientVo.getSite());
+            client.setCodepostal(clientVo.getCodepostal());
+            client.setCoderegion(clientVo.getCoderegion());
+            client.setEmail(clientVo.getEmail());
             client.setQualite(clientVo.getQualite());
-            client.setTelephone(clientVo.getTelephone());
-            client.setTelecopie(clientVo.getTelecopie());
+            client.setTel(clientVo.getTel());
+            client.setTelcopie(clientVo.getTelcopie());
             client.setVille(clientVo.getVille());
             client.setPays(clientVo.getPays());
-            client.setIntitule(clientVo.getIntitule());
-            client.setLinkedIn(clientVo.getLinkedIn());
             client.setTypesociete(clientVo.getTypesociete());
             client.setEtat(clientVo.getEtat());
 
@@ -105,6 +101,86 @@ public class IClientServiceImpl  implements IClientService  {
 
 
     }
+
+
+   /* @Override
+    public List<SocieteVo> sortBy(String fielName) {
+        return SocieteConverter.toListVo(societeRepository.findAll(Sort.by(fielName)));
+
+    }*/
+
+    @Override
+    public  ClientVo findByRs(String rs) {
+        Client client = clientRepository.findByRs(rs);
+        return ClientConverter.toVo(client);
+    }
+
+    @Override
+    public ClientVo findByRc(Long rc) {
+         Client client = clientRepository.findByRc(rc);
+        return ClientConverter.toVo(client);
+    }
+
+    @Override
+     public ClientVo findByCnss(Long cnss) {
+        Client client = clientRepository.findByCnss(cnss);
+        return ClientConverter.toVo(client);
+     }
+    @Override
+     public ClientVo findByIce(Long ice) {
+        Client client = clientRepository.findByIce(ice);
+         return ClientConverter.toVo(client);
+     }
+    @Override
+    public ClientVo findByIp(Long ip) {
+        Client client = clientRepository.findByIp(ip);
+        return ClientConverter.toVo(client);
+    }
+    @Override
+    public ClientVo findByPropriete(String propriete) {
+        Client client = clientRepository.findByPropriete(propriete);
+        return ClientConverter.toVo(client);
+    }
+    @Override
+    public ClientVo findByCtNum(String ctNum) {
+        Client client = clientRepository.findByCtNum(ctNum);
+        return ClientConverter.toVo(client);
+    }
+    @Override
+    public ClientVo findByForme(String forme) {
+         Client client = clientRepository.findByForme(forme);
+         return ClientConverter.toVo(client);
+     }
+    @Override
+     public ClientVo findByCapitale(String capitale) {
+         Client client = clientRepository.findByCapitale(capitale);
+         return ClientConverter.toVo(client);
+     }
+     @Override
+     public ClientVo findBySiege(String siege) {
+         Client client = clientRepository.findBySiege(siege);
+         return ClientConverter.toVo(client);
+     }
+    @Override
+    public ClientVo findBytypesociete(String typesociete) {
+        Client client = clientRepository.findBytypesociete(typesociete);
+        return ClientConverter.toVo(client);
+    }
+
+   /* @Override
+    public ClientVo findByIf(Long i_f) {
+        Client client = clientRepository.findByi_f(i_f);
+        return ClientConverter.toVo(client);
+    }*/
+  /* @Override
+   public ClientVo findByIf(Long i_f) {
+       Client client = clientRepository.findByI_F(i_f);
+       return ClientConverter.toVo(client);
+   }*/
+
+
+
+
 
 
 }

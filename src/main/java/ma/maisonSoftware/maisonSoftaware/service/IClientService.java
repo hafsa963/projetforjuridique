@@ -15,7 +15,27 @@ public interface IClientService {
     ClientVo getClientById(Long id);
     void delete(Long id);
     ClientVo findByRaisonsociale(String rs);
+
+    ClientVo findByRs(String rs);
+
     ClientVo findByRc(Long rc);
     void update(ClientVo clientVo);
+
+    ClientVo findByCnss(Long cnss);
+
+    ClientVo findByIce(Long ice);
+
+    ClientVo findByIp(Long ip);
+
+    ClientVo findByPropriete(String propriete);
+    ClientVo findByCtNum(String ctNum);
+    ClientVo findByForme(String forme);
+
+    ClientVo findByCapitale(String capitale);
+
+    ClientVo findBySiege(String siege);
+    ClientVo findBytypesociete(String typesociete);
+
+   // ClientVo findByIf(Long i_f);
 
 }

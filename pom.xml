@@ -91,6 +91,10 @@
 			<version>RELEASE</version>
 			<scope>compile</scope>
 		</dependency>
+
+
+		<!-- Logback (or another SLF4J binding) -->
+
 	</dependencies>
 
 	<build>

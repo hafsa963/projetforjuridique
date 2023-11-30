@@ -4,7 +4,10 @@ import ma.maisonSoftware.maisonSoftaware.dao.ClientRepository;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientConverter;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
 import ma.maisonSoftware.maisonSoftaware.model.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,20 +19,21 @@ import java.util.Optional;
 @Transactional
 public class IClientServiceImpl  implements IClientService  {
 
+    private static final Logger logger = LoggerFactory.getLogger(IClientServiceImpl.class);
+
     @Autowired
     ClientRepository clientRepository;
 
 
+    @Transactional
    @Override
     public void save(ClientVo clientVo) {
         try {
             Client client = ClientConverter.toBo(clientVo);
             Client savedClient = clientRepository.save(client);
-
-
-        } catch (Exception e) {
-            System.out.println("An error occurred while saving Societe: " + e.getMessage());
-            e.printStackTrace();
+        } catch (DataAccessException e) {
+            logger.error("An error occurred while saving client", e);
+            throw e;
         }
     }
 
@@ -81,21 +85,16 @@ public class IClientServiceImpl  implements IClientService  {
             client.setPropriete(clientVo.getPropriete());
             client.setCmt(clientVo.getCmt());
             client.setAdresse(clientVo.getAdresse());
-            client.setContact(clientVo.getContact());
             client.setComplement(clientVo.getComplement());
             client.setCtNum(clientVo.getCtNum());
-            client.setCodePostal(clientVo.getCodePostal());
-            client.setCodeRegion(clientVo.getCodeRegion());
-            client.setEMail(clientVo.getEMail());
-            client.setFacebook(clientVo.getFacebook());
-            client.setSite(clientVo.getSite());
+            client.setCodepostal(clientVo.getCodepostal());
+            client.setCoderegion(clientVo.getCoderegion());
+            client.setEmail(clientVo.getEmail());
             client.setQualite(clientVo.getQualite());
-            client.setTelephone(clientVo.getTelephone());
-            client.setTelecopie(clientVo.getTelecopie());
+            client.setTel(clientVo.getTel());
+            client.setTelcopie(clientVo.getTelcopie());
             client.setVille(clientVo.getVille());
             client.setPays(clientVo.getPays());
-            client.setIntitule(clientVo.getIntitule());
-            client.setLinkedIn(clientVo.getLinkedIn());
             client.setTypesociete(clientVo.getTypesociete());
             client.setEtat(clientVo.getEtat());
 

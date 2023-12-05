@@ -1,7 +1,7 @@
 package ma.maisonSoftware.maisonSoftaware.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@AllArgsConstructor
 public class Client implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,76 +52,58 @@ public class Client implements Serializable{
     @Column(name = "propriete_Societe")
     private String propriete;
 
-    @Column(name = "CtNum", nullable = false)
-    private String CtNum;
+   // @Column(nullable = false)
+    private String ctNum;
 
-    @Column(name = "Intitule")
-    private String Intitule;
 
-//    @Column(name = "Type")
-//    private String Type;
 
-    @Column(name = "Qualite")
-    private String Qualite;
+    @Column(name = "qualite")
+    private String qualite;
 
-    @Column(name = "Contact")
-    private String Contact;
 
-    @Column(name = "Adresse")
-    private String Adresse;
 
-    @Column(name = "Complement")
-    private String Complement;
+    @Column(name = "adresse")
+    private String adresse;
 
-    @Column(name = "CodePostal")
-    private String CodePostal;
+    @Column(name = "complement")
+    private String complement;
 
-    @Column(name = "Ville")
-    private String Ville;
+    @Column(name = "codepostal")
+    private String codepostal;
 
-    @Column(name = "CodeRegion")
-    private String CodeRegion;
+    @Column(name = "ville")
+    private String ville;
 
-    @Column(name = "Pays")
-    private String Pays;
+    @Column(name = "coderegion")
+    private String coderegion;
 
-    @Column(name = "Telephone")
-    private String Telephone;
+    @Column(name = "pays")
+    private String pays;
 
-    @Column(name = "Telecopie")
-    private String Telecopie;
+    @Column(name = "tel")
+    private String tel;
 
-    @Column(name = "EMail")
-    private String EMail;
+    @Column(name = "telcopie")
+    private String telcopie;
 
-    @Column(name = "Site")
-    private String Site;
+    @Column(name = "email")
+    private String email;
 
-//    @Column(name = "Coface")
-//    private String Coface;
-
-    @Column(name = "Facebook")
-    private String Facebook;
-
-    @Column(name = "LinkedIn")
-    private String LinkedIn;
 
     @Column(name = "cmt")
     private String cmt;
-
-   /* @JsonIgnore
-    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
-    private List<Manager> managers = new ArrayList<>();*/
 
     @Column(name = "etat")
     private String etat;
 
     @Column(name = "nom_Type")
     private String typesociete;
-    @OneToOne(fetch = FetchType.EAGER)
-    private AttachmentEntity attachmentEntity;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clients", cascade = CascadeType.ALL)
+   List<AttachmentEntity> attachmentEntity;
 
-
+  /* @JsonIgnore
+    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
+    private List<Manager> managers = new ArrayList<>();*/
    /* @JsonIgnore
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
     private List<Prestation> prestations = new ArrayList<>();*/

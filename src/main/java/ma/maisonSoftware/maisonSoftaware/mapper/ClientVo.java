@@ -39,46 +39,34 @@ public class ClientVo {
 
     private String propriete;
 
-    private String CtNum;
+    private String ctNum;
 
-    private String Intitule;
 
-//    private String Type;
+    private String qualite;
 
-    private String Qualite;
+    private String adresse;
 
-    private String Contact;
+    private String complement;
 
-    private String Adresse;
+    private String codepostal;
 
-    private String Complement;
 
-    private String CodePostal;
+    private String ville;
 
-    private String Ville;
+    private String coderegion;
 
-    private String CodeRegion;
+    private String pays;
 
-    private String Pays;
+    private String tel;
 
-    private String Telephone;
+    private String telcopie;
 
-    private String Telecopie;
-
-    private String EMail;
-
-    private String Site;
-
-//    private String Coface;
-
-    private String Facebook;
-    private String LinkedIn;
+    private String email;
 
     private String cmt;
 
     private String etat;
 
     private String typesociete;
-    private  AttachmentVo attachment;
-
+    List<AttachmentVo> attachment;
 }

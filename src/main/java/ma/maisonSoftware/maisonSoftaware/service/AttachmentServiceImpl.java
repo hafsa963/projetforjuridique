@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -42,21 +41,41 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public AttachmentVo uploadFile(Long id, MultipartFile file) {
-        Client client = clientRepository.getById(id);
-        String folderName = client.getId() + "-files";
-        filesUploadService.uploadFile(file, folderName);
-        AttachmentVo attachmentVo = new AttachmentVo();
-        attachmentVo.setName(file.getOriginalFilename());
-        attachmentVo.setImagePath(folderName + "/" + file.getOriginalFilename());
-        String fileExt = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-        String mimeType = (!StringUtils.isEmpty(FileManagerUtilis.mimetypes.get(fileExt))) ? FileManagerUtilis.mimetypes.get(fileExt) : "application/octet-stream";
-        attachmentVo.setType(mimeType);
-        AttachmentEntity attachment = attachmentRepository.save(AttachmentConverter.toBo(attachmentVo));
-        client.setAttachmentEntity(attachment);
-        clientRepository.save(client);
-        return AttachmentConverter.toVo(attachment);
+    public AttachmentVo uploadFile(Long clientId, MultipartFile file) {
+        try {
+            Client client = clientRepository.findById(clientId)
+                    .orElseGet(() -> {
+                        Client newClient = new Client();
+                        return clientRepository.save(newClient);
+                    });
+
+            String folderName = client.getId() + "-files";
+            filesUploadService.uploadFile(file, folderName);
+
+            AttachmentVo attachmentVo = new AttachmentVo();
+            attachmentVo.setName(file.getOriginalFilename());
+            attachmentVo.setImagePath(folderName + "/" + file.getOriginalFilename());
+            String fileExt = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+            String mimeType = (!StringUtils.isEmpty(FileManagerUtilis.mimetypes.get(fileExt))) ? FileManagerUtilis.mimetypes.get(fileExt) : "application/octet-stream";
+            attachmentVo.setType(mimeType);
+
+            AttachmentEntity attachment = new AttachmentEntity();
+            attachment.setName(attachmentVo.getName());
+            attachment.setType(attachmentVo.getType());
+            attachment.setImagePath(attachmentVo.getImagePath());
+            attachment.setClients(client);
+
+            // Save the AttachmentEntity, which should cascade to the associated Client
+            AttachmentEntity savedAttachment = attachmentRepository.save(attachment);
+
+            return AttachmentConverter.toVo(savedAttachment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Log additional information if needed
+            throw new RuntimeException("Error uploading file", e);
+        }
     }
+
 
     @Override
     public byte[] downloadFile(String fileName) throws IOException {

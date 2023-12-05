@@ -6,7 +6,10 @@ import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.SocieteVo;
 import ma.maisonSoftware.maisonSoftaware.service.AttachmentService;
 import ma.maisonSoftware.maisonSoftaware.service.IClientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +23,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/Clients")
 public class ClientController {
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     IClientService iClientService;
     @GetMapping(value = "/admin/client", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public List<ClientVo> getAll()
+    public List<ClientVo> getAllClient()
     {
         return iClientService.getAllClient();
     }
@@ -37,8 +41,13 @@ public class ClientController {
     }
     @PostMapping(value = "/admin/createClient")
     public ResponseEntity<Object> createClient(@Valid @RequestBody ClientVo clientVo) {
-        iClientService.save(clientVo);
-        return new ResponseEntity<>("client is created successfully", HttpStatus.CREATED);
+        try {
+            logger.info("Received client data: {}", clientVo);
+            iClientService.save(clientVo);
+            return new ResponseEntity<>("Client created successfully", HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            return new ResponseEntity<>("Failed to create client: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping(value = "/admin/updateSociete/{id}")

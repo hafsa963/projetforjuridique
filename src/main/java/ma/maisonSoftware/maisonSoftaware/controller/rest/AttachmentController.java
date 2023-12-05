@@ -20,10 +20,19 @@ public class AttachmentController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/upload/{id}")
-    public void uploadFile(@PathVariable Long id, @RequestPart("file") MultipartFile[] file) {
-        attachmentService.uploadFile(id, file[0]);
+    public ResponseEntity<String> uploadFile(@PathVariable Long id, @RequestPart("file") MultipartFile[] file) {
+        try {
+            attachmentService.uploadFile(id, file[0]);
+            return ResponseEntity.ok("File uploaded successfully");
+        } catch (Exception e) {
+            // Log the error details for debugging
+            e.printStackTrace();
 
+            // Return an error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading file");
+        }
     }
+
 
 
     @GetMapping("/download/{fileName}")

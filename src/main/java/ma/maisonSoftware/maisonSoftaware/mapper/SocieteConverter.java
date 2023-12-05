@@ -6,24 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocieteConverter {
-    public static SocieteVo toVo(Societe societe){
-         SocieteVo societeVo = new SocieteVo();
-         societeVo.setId(societe.getId());
-         societeVo.setNom(societe.getNom());
-         societeVo.setForme(societe.getForme());
-         societeVo.setCapitale(societe.getCapitale());
-         societeVo.setSiege(societe.getSiege());
-         societeVo.setRc(societe.getRc());
-         societeVo.setI_f(societe.getI_f());
-         societeVo.setIce(societe.getIce());
-         societeVo.setIp(societe.getIp());
-         societeVo.setCnss(societe.getCnss());
-         societeVo.setPropriete(societe.getPropriete());
-         societeVo.setEtat(societe.getEtat());
-         societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
-         societeVo.setPrestationList(PrestationConverter.toVoListPrestation(societe.getPrestations()));
-         return societeVo;
-    }
+     public static SocieteVo toVo(Societe societe){
+          SocieteVo societeVo = new SocieteVo();
+          societeVo.setId(societe.getId());
+          societeVo.setNom(societe.getNom());
+          societeVo.setForme(societe.getForme());
+          societeVo.setCapitale(societe.getCapitale());
+          societeVo.setSiege(societe.getSiege());
+          societeVo.setRc(societe.getRc());
+          societeVo.setI_f(societe.getI_f());
+          societeVo.setIce(societe.getIce());
+          societeVo.setIp(societe.getIp());
+          societeVo.setCnss(societe.getCnss());
+          societeVo.setPropriete(societe.getPropriete());
+          societeVo.setEtat(societe.getEtat());
+          societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
+          societeVo.setPrestationList(PrestationConverter.toVoListPrestation(societe.getPrestations()));
+          return societeVo;
+     }
      public static Societe toBo(SocieteVo societeVo){
           Societe toBo = new Societe();
           toBo.setId(societeVo.getId());

@@ -2,13 +2,9 @@ package ma.maisonSoftware.maisonSoftaware;
 
 import ma.maisonSoftware.maisonSoftaware.dao.EtapeRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
-import ma.maisonSoftware.maisonSoftaware.mapper.*;
-import ma.maisonSoftware.maisonSoftaware.model.Etape;
-import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 //import ma.maisonSoftware.maisonSoftaware.service.EtapeService;
 import ma.maisonSoftware.maisonSoftaware.service.IPrestationService;
 import ma.maisonSoftware.maisonSoftaware.service.ISocieteService;
-import ma.maisonSoftware.maisonSoftaware.service.ITypesocieteService;
 import ma.maisonSoftware.maisonSoftaware.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 @EnableWebMvc
@@ -33,9 +27,6 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 
 	@Autowired
 	private ISocieteService iSocieteService;
-	@Autowired
-	private ITypesocieteService iTypesocieteService;
-
 
 //	@Autowired
 //	private EtapeService etapeService;
@@ -70,66 +61,51 @@ public class MaisonSoftawareApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		PrivilegeVo privilege1 = new PrivilegeVo("create_users");
-		PrivilegeVo privilege2 = new PrivilegeVo("delete_users");
-		PrivilegeVo privilege3 = new PrivilegeVo("update_users");
-		PrivilegeVo privilege4 = new PrivilegeVo("view");
-		PrivilegeVo privilege5 = new PrivilegeVo("pagination_users");
-		PrivilegeVo privilege6 = new PrivilegeVo("sort_users");
-
-
-		RoleVo roleSuperAdmin = new RoleVo("SUPERADMIN");
-		RoleVo roleAdmin = new RoleVo("ADMIN");
-		RoleVo roleChef = new RoleVo("ROLE_USER");
-
-		//typeSociete TypesName:
-		TypeSocieteVo typeSocieteVo1 = new TypeSocieteVo( "SARL");
-		TypeSocieteVo typeSocieteVo2 = new TypeSocieteVo( "SARLAU");
-		TypeSocieteVo typeSocieteVo3 = new TypeSocieteVo( "SA");
-		TypeSocieteVo typeSocieteVo4 = new TypeSocieteVo( "Auto Entrepreneur");
-		TypeSocieteVo typeSocieteVo5 = new TypeSocieteVo( "personne phisique");
-		TypeSocieteVo typeSocieteVo6 = new TypeSocieteVo( "personne morale");
-
-		iTypesocieteService.save(typeSocieteVo1);
-		iTypesocieteService.save(typeSocieteVo2);
-		iTypesocieteService.save(typeSocieteVo3);
-		iTypesocieteService.save(typeSocieteVo4);
-		iTypesocieteService.save(typeSocieteVo5);
-		iTypesocieteService.save(typeSocieteVo6);
-
-		roleSuperAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
-		roleAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
-		roleChef.setPrivileges(Arrays.asList(privilege4));
-		userService.save(privilege1);
-		userService.save(privilege2);
-		userService.save(privilege3);
-		userService.save(privilege4);
-		userService.save(privilege5);
-		userService.save(privilege6);
-		userService.save(roleSuperAdmin);
-		userService.save(roleAdmin);
-		userService.save(roleChef);
+//		PrivilegeVo privilege1 = new PrivilegeVo("create_users");
+//		PrivilegeVo privilege2 = new PrivilegeVo("delete_users");
+//		PrivilegeVo privilege3 = new PrivilegeVo("update_users");
+//		PrivilegeVo privilege4 = new PrivilegeVo("view");
+//		PrivilegeVo privilege5 = new PrivilegeVo("pagination_users");
+//		PrivilegeVo privilege6 = new PrivilegeVo("sort_users");
+//
+//
+//
+//		RoleVo roleSuperAdmin = new RoleVo("SUPERADMIN");
+//		RoleVo roleAdmin = new RoleVo("ADMIN");
+//		RoleVo roleChef = new RoleVo("ROLE_USER");
+//
+//
+//		roleSuperAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
+//		roleAdmin.setPrivileges(Arrays.asList(privilege1, privilege2, privilege3, privilege4, privilege5, privilege6));
+//		roleChef.setPrivileges(Arrays.asList(privilege4));
+//		userService.save(privilege1);
+//		userService.save(privilege2);
+//		userService.save(privilege3);
+//		userService.save(privilege4);
+//		userService.save(privilege5);
+//		userService.save(privilege6);
+//		userService.save(roleSuperAdmin);
+//		userService.save(roleAdmin);
+//		userService.save(roleChef);
 //		UserVo admin = new UserVo("admin1", "admin1", Arrays.asList(roleAdmin), true, true, true, true);
-		UserVo admin = new UserVo("adminbenis","beniss","reda","beniss@gmail","directeur","adminadmin","adminadmin",Arrays.asList(roleAdmin),true,true,true,true);
+//		UserVo superadmin = new UserVo("superadmin1", "superadmin1", Arrays.asList(roleSuperAdmin), true, true, true, true);
+//		UserVo chef = new UserVo("chef1", "chef1", Arrays.asList(roleChef), true, true, true, true);
+//		userService.save(admin);
+//		userService.save(chef);
+//		userService.save(superadmin);
+//		ManagerVo managerVo = new ManagerVo("manager1");
+//		ManagerVo managerVo1 = new ManagerVo("manager2");
+//
+//		iSocieteService.save(new SocieteVo("nom1", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
+//
+//		iSocieteService.save(new SocieteVo("nom2", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
+//
+//        SocieteVo societeVo = new SocieteVo("nom3","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));
+//
+//       iSocieteService.save(societeVo);
 
-		/*UserVo superadmin = new UserVo("superadmin1", "superadmin1", Arrays.asList(roleSuperAdmin), true, true, true, true);
-		UserVo chef = new UserVo("chef1", "chef1", Arrays.asList(roleChef), true, true, true, true);*/
-		userService.save(admin);
-	/*	userService.save(chef);
-		userService.save(superadmin);*/
-
-		/*SocieteVo societeVo = new SocieteVo("deloitte","forme3","10000dh","seige3", 76L, 87555L, 766L, 665L, 877L,"prop44","en cours",null);
-		SocieteVo societeVo1 = new SocieteVo("IBM","forme3","10000dh","seige3", 7L, 555L, 726L, 5L, 327L,"prop44","en cours",null);
-		SocieteVo societeVo2 = new SocieteVo("inside","forme3","10000dh","seige3", 6L, 8755L, 866L, 65L, 8234L,"prop44","en cours",null);
-		 iSocieteService.save(societeVo);
-		iSocieteService.save(societeVo1);
-		iSocieteService.save(societeVo2);*/
-	/*	iSocieteService.save(new SocieteVo("inside tech", "form1", "10000dh", "seige1", 877l, 87L, 99l, 87L, 77L, "propriete2",Arrays.asList(managerVo,managerVo1)));
-		iSocieteService.save(new SocieteVo("IBM", "form2", "10000dh", "seige2", 8777l, 8777L, 9976l, 87L, 77L, "propriete3",Arrays.asList(managerVo)));
-        SocieteVo societeVo = new SocieteVo("deloitte","forme3","10000dh","seige3",7666l,87555l,766l,66556l,877l,"prop44",Arrays.asList(managerVo));*/
-
-
-
+//		PrestationVo prestationVo = new PrestationVo("test");
+//	iPrestationService.save(prestationVo);
 
  	}
 }

@@ -124,7 +124,7 @@ public class ISocieteServiceImpl implements ISocieteService {
 
 
         } catch (Exception e) {
-             System.out.println("An error occurred while saving Societe: " + e.getMessage());
+            System.out.println("An error occurred while saving Societe: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -171,24 +171,24 @@ public class ISocieteServiceImpl implements ISocieteService {
               e.printStackTrace();
           }
       }*/
-  @Override
-  public void save(List<ManagerVo> managerVos, Long societeId) {
-      try {
-          Societe societe = societeRepository.findById(societeId).get(); // Fetch the Societe object using the provided societeId
-          List<Manager> managers = new ArrayList<>();
-          for (ManagerVo managerVo : managerVos) {
-              calculateMandatDurationInYears(managerVo);
-              Manager manager = ManagerConverter.bo(managerVo);
-              manager.setSociete(societe); // Set the societe for each manager
-              managers.add(manager);
-          }
-          managerRepository.saveAll(managers);
-      } catch (Exception e) {
-          // Log the exception and other relevant data
-          System.out.println("An error occurred while saving Manager: " + e.getMessage());
-          e.printStackTrace();
-      }
-  }
+    @Override
+    public void save(List<ManagerVo> managerVos, Long societeId) {
+        try {
+            Societe societe = societeRepository.findById(societeId).get(); // Fetch the Societe object using the provided societeId
+            List<Manager> managers = new ArrayList<>();
+            for (ManagerVo managerVo : managerVos) {
+                calculateMandatDurationInYears(managerVo);
+                Manager manager = ManagerConverter.bo(managerVo);
+                manager.setSociete(societe); // Set the societe for each manager
+                managers.add(manager);
+            }
+            managerRepository.saveAll(managers);
+        } catch (Exception e) {
+            // Log the exception and other relevant data
+            System.out.println("An error occurred while saving Manager: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -211,7 +211,7 @@ public class ISocieteServiceImpl implements ISocieteService {
 
     @Override
     public void deleteManager(Long id) {
-     managerRepository.deleteById(id);
+        managerRepository.deleteById(id);
     }
 
 
@@ -255,18 +255,18 @@ public class ISocieteServiceImpl implements ISocieteService {
             societe.setI_f(societeVo.getI_f());
             societe.setSiege(societeVo.getSiege());
             societe.setIce(societeVo.getIce());
-           societeVo.getManagerVoList().forEach(manager->{
-               Optional<Manager> optionalManager = managerRepository.findById(manager.getId());
-               if(optionalManager.isPresent()){
-                   optionalManager.get().setNameManager(manager.getNameManager());
-                   optionalManager.get().setSociete(societe);
-                   managerRepository.save(optionalManager.get());
-               }else {
-                   Manager managerEnity = ManagerConverter.bo(manager);
-                   managerEnity.setSociete(societe);
-                   managerRepository.save(managerEnity);
-               }
-           });
+            societeVo.getManagerVoList().forEach(manager->{
+                Optional<Manager> optionalManager = managerRepository.findById(manager.getId());
+                if(optionalManager.isPresent()){
+                    optionalManager.get().setNameManager(manager.getNameManager());
+                    optionalManager.get().setSociete(societe);
+                    managerRepository.save(optionalManager.get());
+                }else {
+                    Manager managerEnity = ManagerConverter.bo(manager);
+                    managerEnity.setSociete(societe);
+                    managerRepository.save(managerEnity);
+                }
+            });
 
         }
 

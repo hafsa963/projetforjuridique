@@ -37,7 +37,6 @@ public class ClientConverter {
         clientVo.setPays(client.getPays());
         clientVo.setTypesociete(client.getTypesociete());
         clientVo.setEtat(client.getEtat());
-        clientVo.setAttachment(AttachmentConverter.toVo(client.getAttachmentEntity()));
 
         return clientVo;
     }
@@ -73,7 +72,6 @@ public class ClientConverter {
         clientBo.setPays(clientVo.getPays());
         clientBo.setTypesociete(clientVo.getTypesociete());
         clientBo.setEtat(clientVo.getEtat());
-        clientBo.setAttachmentEntity(AttachmentConverter.toBo(clientVo.getAttachment()));
 
         return clientBo;
     }

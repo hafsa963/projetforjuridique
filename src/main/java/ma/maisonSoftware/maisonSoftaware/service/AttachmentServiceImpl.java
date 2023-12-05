@@ -53,7 +53,7 @@ public class AttachmentServiceImpl implements AttachmentService {
         String mimeType = (!StringUtils.isEmpty(FileManagerUtilis.mimetypes.get(fileExt))) ? FileManagerUtilis.mimetypes.get(fileExt) : "application/octet-stream";
         attachmentVo.setType(mimeType);
         AttachmentEntity attachment = attachmentRepository.save(AttachmentConverter.toBo(attachmentVo));
-        client.setAttachmentEntity(attachment);
+        //client.setAttachmentEntity(attachment);
         clientRepository.save(client);
         return AttachmentConverter.toVo(attachment);
     }

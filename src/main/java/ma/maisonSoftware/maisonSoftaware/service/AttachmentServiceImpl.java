@@ -1,26 +1,22 @@
 package ma.maisonSoftware.maisonSoftaware.service;
 
-import lombok.RequiredArgsConstructor;
 import ma.maisonSoftware.maisonSoftaware.dao.AttachmentRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.ClientRepository;
-import ma.maisonSoftware.maisonSoftaware.dao.SocieteRepository;
 import ma.maisonSoftware.maisonSoftaware.mapper.AttachmentConverter;
 import ma.maisonSoftware.maisonSoftaware.mapper.AttachmentVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.FileManagerUtilis;
-import ma.maisonSoftware.maisonSoftaware.mapper.SocieteVo;
 import ma.maisonSoftware.maisonSoftaware.model.AttachmentEntity;
 import ma.maisonSoftware.maisonSoftaware.model.Client;
-import ma.maisonSoftware.maisonSoftaware.model.Societe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -58,30 +54,54 @@ public class AttachmentServiceImpl implements AttachmentService {
             String fileExt = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
             String mimeType = (!StringUtils.isEmpty(FileManagerUtilis.mimetypes.get(fileExt))) ? FileManagerUtilis.mimetypes.get(fileExt) : "application/octet-stream";
             attachmentVo.setType(mimeType);
-
             AttachmentEntity attachment = new AttachmentEntity();
             attachment.setName(attachmentVo.getName());
             attachment.setType(attachmentVo.getType());
             attachment.setImagePath(attachmentVo.getImagePath());
             attachment.setClients(client);
 
-            // Save the AttachmentEntity, which should cascade to the associated Client
             AttachmentEntity savedAttachment = attachmentRepository.save(attachment);
 
             return AttachmentConverter.toVo(savedAttachment);
         } catch (Exception e) {
             e.printStackTrace();
-            // Log additional information if needed
             throw new RuntimeException("Error uploading file", e);
         }
     }
 
+    public byte[] downloadFile(Long fileId) {
+        Optional<AttachmentEntity> fileOptional = attachmentRepository.findById(fileId);
+
+        if (fileOptional.isPresent()) {
+            AttachmentEntity fileEntity = fileOptional.get();
+
+            try (InputStream inputStream = Files.newInputStream(Paths.get("src\\main\\resources",fileEntity.getImagePath()));
+                 ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+
+                byte[] data = new byte[1024];
+                int nRead;
+
+                while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+
+                return buffer.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new byte[0];
+    }
 
     @Override
-    public byte[] downloadFile(String fileName) throws IOException {
-        Optional<AttachmentEntity> fileObject = attachmentRepository.findByName(fileName);
-        String fullPath = fileObject.get().getImagePath();
-        return filesUploadService.download(fullPath);
+    public Optional<AttachmentEntity> findById(Long id) {
+        return attachmentRepository.findById(id);
+    }
+
+    @Override
+    public List<AttachmentEntity> findAll() {
+        return attachmentRepository.findAll();
     }
 
 

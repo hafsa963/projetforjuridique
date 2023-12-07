@@ -201,10 +201,10 @@ public class IUserServiceImpl implements IUserService {
     }
 
 
-  /*  @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return UserConverter.toVo(userRepository1.findByUsername(username));
-    }*/
+    /*  @Override
+      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+          return UserConverter.toVo(userRepository1.findByUsername(username));
+      }*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository1.findByUsername(username);
@@ -246,4 +246,3 @@ public class IUserServiceImpl implements IUserService {
     }*/
 
 }
-

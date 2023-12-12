@@ -27,10 +27,10 @@ public class SocieteController {
     @Autowired
     ISocieteService iSocieteService;
 
-    @GetMapping(value = "/admin/societe", produces = MediaType.APPLICATION_JSON_VALUE)
+   /* @GetMapping(value = "/admin/societe", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SocieteVo> getAll() {
         return iSocieteService.getAllSociete();
-    }
+    }*/
 
     @GetMapping(value = "/societe/{id}")
     public ResponseEntity<Object> getSocieteById(@PathVariable(value = "id") Long societeVoId) {
@@ -40,13 +40,13 @@ public class SocieteController {
         return new ResponseEntity<>(societeVoFound, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/admin/createSociete")
+   /* @PostMapping(value = "/admin/createSociete")
     public ResponseEntity<Object> createSociete(@Valid @RequestBody SocieteVo societeVo) {
         iSocieteService.save(societeVo);
         return new ResponseEntity<>("societe is created successfully", HttpStatus.CREATED);
-    }
+    }*/
 
-    @PutMapping(value = "/admin/updateSociete/{id}")
+   /* @PutMapping(value = "/admin/updateSociete/{id}")
     public ResponseEntity<Object> updateSociete(@PathVariable(name = "id") Long societeId, @Valid @RequestBody SocieteVo societeVo) {
         SocieteVo societeVo1Found = iSocieteService.getSocieteById(societeId);
         if (societeVo1Found == null)
@@ -54,7 +54,7 @@ public class SocieteController {
         societeVo.setId(societeId);
         iSocieteService.save(societeVo);
         return new ResponseEntity<>("Societe is updated successsfully", HttpStatus.OK);
-    }
+    }*/
 
     @DeleteMapping(value = "/admin/deleteSociete/{id}")
     //@PreAuthorize("hasRole('ADMIN')")
@@ -91,6 +91,9 @@ public class SocieteController {
     public ResponseEntity<Object> deleteManager(@PathVariable(name = "id") long managerId) {
         iSocieteService.deleteManager(managerId);
         return new ResponseEntity<>("manager is deleted successsfully", HttpStatus.OK);
+
+
+
 
 //    }
 //    @GetMapping("/downloadFile/{id}")

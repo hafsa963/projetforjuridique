@@ -55,10 +55,10 @@ public class Societe implements Serializable {
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE )
     private List<Manager> managers = new ArrayList<>();
 
-    @JsonIgnore
+    /*@JsonIgnore
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
-    private List<Prestation> prestations = new ArrayList<>();
-    public Societe(Long id, String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String etat, List<Manager> managers, List<Prestation> prestations) {
+    private List<Prestation> prestations = new ArrayList<>();*/
+    public Societe(Long id, String nom, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String etat, List<Manager> managers) {
         this.id = id;
         this.nom = nom;
         this.forme = forme;
@@ -72,6 +72,8 @@ public class Societe implements Serializable {
         this.propriete = propriete;
         this.etat = etat;
         this.managers = managers;
-        this.prestations = prestations;
+       // this.prestations = prestations;public void setPrestations(     List<Prestation> prestations
     }
+
+
 }

@@ -4,6 +4,7 @@ import ma.maisonSoftware.maisonSoftaware.model.Client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientConverter {
     public static ClientVo toVo(Client client) {
@@ -38,12 +39,17 @@ public class ClientConverter {
         clientVo.setTypesociete(client.getTypesociete());
         clientVo.setEtat(client.getEtat());
 
+        clientVo.setAttachment(AttachmentConverter.toVoList(client.getAttachmentEntity()));
+        clientVo.setPrestationList(PrestationConverter.toVoListPrestation(client.getPrestations()));
+
+
+
         return clientVo;
     }
 
     public static Client toBo(ClientVo clientVo) {
         if (clientVo == null) {
-            return null; // or throw an exception, depending on your requirements
+            return null;
         }
 
         Client clientBo = new Client();
@@ -73,24 +79,48 @@ public class ClientConverter {
         clientBo.setTypesociete(clientVo.getTypesociete());
         clientBo.setEtat(clientVo.getEtat());
 
+        clientBo.setAttachmentEntity(AttachmentConverter.toBoList(clientVo.attachment));
+        clientBo.setPrestations(PrestationConverter.toBoListPrestation(clientVo.getPrestationList()));
+
+
+
         return clientBo;
     }
 
 
-    public static List<ClientVo> toListVo(List<Client> listBo) {
+  /*  public static List<ClientVo> toListVo(List<Client> listBo) {
         List<ClientVo> listVo = new ArrayList<>();
         for (Client client : listBo) {
             listVo.add(toVo(client));
         }
         return listVo;
     }
+    */
+
+
+    public static List<ClientVo> toVoList(List<Client> listBo) {
+        if (listBo == null){
+            return  null;
+        }
+        return listBo.stream()
+                .map(ClientConverter::toVo)
+                .collect(Collectors.toList());
+    }
     public static List<Client> toListBo(List<ClientVo> listVo) {
+        if (listVo == null){
+            return  null;
+        }
+        return listVo.stream()
+                .map(ClientConverter::toBo)
+                .collect(Collectors.toList());
+    }
+   /* public static List<Client> toListBo(List<ClientVo> listVo) {
         List<Client> ListBo = new ArrayList<>();
         for (ClientVo clientVo : listVo) {
             ListBo.add(toBo(clientVo));
         }
         return ListBo;
-    }
+    }*/
 
 
 

@@ -2,7 +2,9 @@ package ma.maisonSoftware.maisonSoftaware.controller.rest;
 
 
 import io.swagger.v3.oas.models.responses.ApiResponse;
+import ma.maisonSoftware.maisonSoftaware.mapper.ClientConverter;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
+import ma.maisonSoftware.maisonSoftaware.model.Client;
 import ma.maisonSoftware.maisonSoftaware.service.IClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,10 +27,18 @@ public class ClientController {
 
     @Autowired
     IClientService iClientService;
-    @GetMapping(value = "/admin/client", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    /*@GetMapping(value = "/admin/client", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public List<ClientVo> getAllClient()
     {
         return iClientService.getAllClient();
+    }
+*/
+
+
+    @GetMapping("/admin/client")
+    public ResponseEntity<List<Client>> getClientsWithAndWithoutPrestations() {
+        List<Client> clients = iClientService.getAllClientsWithAndWithoutPrestations();
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
     @GetMapping(value = "/client/{id}")
     public ResponseEntity<Object> getclientByid(@PathVariable(value = "id") Long clientVoId) {
@@ -163,6 +174,21 @@ public class ClientController {
         if (societeRcFound == null)
             return new ResponseEntity<>("societe rc doen't exist", HttpStatus.OK);
         return new ResponseEntity<>(societeRcFound, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/admin/client/update/{id_client}/{id}")
+    public ResponseEntity<Object> associateSocietePrestation(@PathVariable(name = "id_client") Long idClient,
+            @PathVariable(name = "id") Long idPrestation, @Valid @RequestBody ClientVo clientVo
+    ) {
+        try {
+            String result = iClientService.associateSocietePrestation(idClient, idPrestation);
+            return ResponseEntity.ok().body(new ApiResponse());
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Client or Prestation not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while updating the association", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

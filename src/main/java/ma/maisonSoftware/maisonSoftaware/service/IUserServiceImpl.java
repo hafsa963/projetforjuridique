@@ -21,17 +21,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service("userService")
 @Transactional
 public class IUserServiceImpl implements IUserService {
@@ -103,10 +99,38 @@ public class IUserServiceImpl implements IUserService {
         userRepository1.save(bo);
 
     }
+    @Override
+    public UserVo getuserById(Long id) {
+
+        boolean trouver = userRepository1.existsById(id);
+        if (!trouver) return null;
+        return UserConverter.toVo(userRepository1.getById(id));
+
+    }
+
+    @Override
+    public void update(UserVo vo) {
+        Optional<User> optional = userRepository1.findById(vo.getId());
+
+        if (optional.isPresent()) {
+            User user = optional.get();
 
 
+            user.setId(vo.getId());
+            user.setNom(vo.getNom());
+            user.setPrenom(vo.getPrenom());
+            user.setEmailPro(vo.getEmailPro());
+            user.setUsername(vo.getUsername());
+            user.setPoste(vo.getPoste());
+            user.setPassword(vo.getPassword());
+            user.setRoles(RoleConverter.toBoList(vo.getRoles()));
+          /*  user.setConfirmPassword(vo.getConfirmPassword());*/
+            user.setAccountNonExpired(vo.getAccountNonExpired());
+            user.setEnabled(vo.getEnabled());
+            user.setAccountNonLocked(vo.getAccountNonLocked());
 
-
+        }
+    }
 
 
 
@@ -122,14 +146,7 @@ public class IUserServiceImpl implements IUserService {
         userRepository1.deleteById(id);
     }
 
-    @Override
-    public UserVo getuserById(Long id) {
 
-        boolean trouver = userRepository1.existsById(id);
-        if (!trouver) return null;
-        return UserConverter.toVo(userRepository1.getById(id));
-
-    }
 
 
     @Override
@@ -201,10 +218,10 @@ public class IUserServiceImpl implements IUserService {
     }
 
 
-  /*  @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return UserConverter.toVo(userRepository1.findByUsername(username));
-    }*/
+    /*  @Override
+      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+          return UserConverter.toVo(userRepository1.findByUsername(username));
+      }*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository1.findByUsername(username);

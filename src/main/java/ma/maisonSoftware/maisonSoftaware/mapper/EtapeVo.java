@@ -13,11 +13,10 @@ public class EtapeVo {
 
     private String nomEtape;
 
-
-
-
-
-
+    public EtapeVo(int idEtape, String nomEtape) {
+        this.idEtape = idEtape;
+        this.nomEtape = nomEtape;
+    }
 
 
     //private List<DocumentDto> documentDto;

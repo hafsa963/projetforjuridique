@@ -18,6 +18,8 @@ public interface IUserService extends UserDetailsService {
     void save(PrivilegeVo vo);
     List<UserVo> getAllUsers();
     List<RoleVo> getAllRoles();
+    void update(UserVo vo);
+
     RoleVo findByRole(String role);
     void delete(long id);
     UserVo getuserById(Long id);

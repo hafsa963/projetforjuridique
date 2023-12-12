@@ -3,6 +3,7 @@ package ma.maisonSoftware.maisonSoftaware.service;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.ManagerVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.SocieteVo;
+import ma.maisonSoftware.maisonSoftaware.model.Client;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ public interface IClientService {
 
     void save(ClientVo clientVo);
 
-    List<ClientVo> getAllClient();
+
+    //List<ClientVo> getAllClients();
 
     ClientVo getClientById(Long id);
     void delete(Long id);
@@ -36,6 +38,10 @@ public interface IClientService {
     ClientVo findBySiege(String siege);
     ClientVo findBytypesociete(String typesociete);
 
-   // ClientVo findByIf(Long i_f);
+    String associateSocietePrestation(long id_client, long id);
+
+    List<Client> getAllClientsWithAndWithoutPrestations();
+
+    // ClientVo findByIf(Long i_f);
 
 }

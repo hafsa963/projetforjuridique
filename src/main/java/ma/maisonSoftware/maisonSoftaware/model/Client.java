@@ -1,6 +1,8 @@
 package ma.maisonSoftware.maisonSoftaware.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Client implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,14 +101,28 @@ public class Client implements Serializable{
 
     @Column(name = "nom_Type")
     private String typesociete;
+ 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clients", cascade = CascadeType.ALL)
+   List<AttachmentEntity> attachmentEntity;
 
 
+   /* @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clients", cascade = CascadeType.ALL)*/
+   @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+   @JoinTable(
+           name = "CLIENT_PRESTATION",
+           joinColumns = @JoinColumn(name = "CLIENT_ID"),
+           inverseJoinColumns = @JoinColumn(name = "PRESTATION_ID")
+   )
+    List<Prestation> prestations = new ArrayList<>();
 
-  /* @JsonIgnore
+
+  /* cascade = { CascadeType.PERSIST, CascadeType.MERGE }
+  @JsonIgnore
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
     private List<Manager> managers = new ArrayList<>();*/
-   /* @JsonIgnore
-    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
-    private List<Prestation> prestations = new ArrayList<>();*/
+
 }
 

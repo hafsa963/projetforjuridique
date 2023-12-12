@@ -3,6 +3,7 @@ package ma.maisonSoftware.maisonSoftaware.controller.rest;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import ma.maisonSoftware.maisonSoftaware.mapper.EtapeVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.PrestationVo;
+import ma.maisonSoftware.maisonSoftaware.mapper.PrestationsomaireVo;
 import ma.maisonSoftware.maisonSoftaware.mapper.SocieteVo;
 import ma.maisonSoftware.maisonSoftaware.service.IPrestationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PrestationController {
 
 
     @GetMapping(value = "/getAll" ,produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public List<PrestationVo> getAll()
+    public List<PrestationsomaireVo> getAll()
     {
         return iPrestationService.getAllPrestation();
     }

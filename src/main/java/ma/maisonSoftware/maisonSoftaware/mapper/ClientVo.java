@@ -1,13 +1,11 @@
 package ma.maisonSoftware.maisonSoftaware.mapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.maisonSoftware.maisonSoftaware.model.Manager;
+import ma.maisonSoftware.maisonSoftaware.model.Client;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,4 +67,40 @@ public class ClientVo {
 
     private String typesociete;
 
+    List<AttachmentVo> attachment;
+    List<PrestationVo>  prestationList = new ArrayList<>();
+
+
+    public ClientVo(String rs, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String ctNum, String qualite, String adresse, String complement, String codepostal, String ville, String coderegion, String pays, String tel, String telcopie, String email, String cmt, String etat, String typesociete) {
+        this.rs = rs;
+        this.forme = forme;
+        this.capitale = capitale;
+        this.siege = siege;
+        this.rc = rc;
+        this.i_f = i_f;
+        this.ice = ice;
+        this.ip = ip;
+        this.cnss = cnss;
+        this.propriete = propriete;
+        this.ctNum = ctNum;
+        this.qualite = qualite;
+        this.adresse = adresse;
+        this.complement = complement;
+        this.codepostal = codepostal;
+        this.ville = ville;
+        this.coderegion = coderegion;
+        this.pays = pays;
+        this.tel = tel;
+        this.telcopie = telcopie;
+        this.email = email;
+        this.cmt = cmt;
+        this.etat = etat;
+        this.typesociete = typesociete;
+
+    }
+
+
 }
+
+    /*   this.attachment = attachment;
+        this.prestationList = prestationList;*/

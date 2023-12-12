@@ -8,9 +8,9 @@ import ma.maisonSoftware.maisonSoftaware.model.Societe;
 import java.util.List;
 
 public interface ISocieteService {
-    List<SocieteVo> getAllSociete();
-    void save(SocieteVo societeVo);
-    String associateSocietePrestation(long id_Societe, long id);
+    //List<SocieteVo> getAllSociete();
+    //void save(SocieteVo societeVo);
+    //String associateSocietePrestation(long id_Societe, long id);
 
     void save(List<ManagerVo> managerVos, Long societeId);
 

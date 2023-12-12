@@ -1,8 +1,10 @@
 package ma.maisonSoftware.maisonSoftaware.service;
 
+import ma.maisonSoftware.maisonSoftaware.dao.ClientRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.EtapeRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
 import ma.maisonSoftware.maisonSoftaware.mapper.*;
+import ma.maisonSoftware.maisonSoftaware.model.Client;
 import ma.maisonSoftware.maisonSoftaware.model.Etape;
 import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,18 @@ public class IPrestationServiceImpl implements IPrestationService {
     @Autowired
     private EtapeRepository etapeRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Override
-    public List<PrestationVo> getAllPrestation() {
-        List<Prestation> prestations = prestationRepository.findAll();
-        List<PrestationVo> prestations1 = PrestationConverter.toVoListPrestation(prestations);
-        return prestations1;
+    public List<PrestationsomaireVo> getAllPrestation() {
+
+        List<Prestation> prestations =   prestationRepository.getAllPrestation();
+        List<PrestationsomaireVo> prestations1 =  PrestationsomaireConverter.toVoListPrestation(prestations);
+         return  prestations1;
     }
+
+
 
     @Transactional
     @Override
@@ -100,11 +108,12 @@ public class IPrestationServiceImpl implements IPrestationService {
         prestationRepository.deleteById(id);
     }
 
-    @Override
+  /*  @Override
     public List<PrestationVo> findAll(int pageId, int size) {
         Page<Prestation> prestationPage = prestationRepository.findAll(PageRequest.of(pageId, size, Sort.Direction.ASC));
         return PrestationConverter.toVoListPrestation(prestationPage.getContent());
-    }
+    }*/
+
 
     @Override
     public List<PrestationVo> sortBy(String fielName) {
@@ -131,5 +140,7 @@ public class IPrestationServiceImpl implements IPrestationService {
     public  PrestationVo getalletapeByPrestation(long id){
         return  PrestationConverter.toVo(prestationRepository.findByid(id));
     }
+
+
 
 }

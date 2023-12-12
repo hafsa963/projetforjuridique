@@ -31,18 +31,67 @@ public class ISocieteServiceImpl implements ISocieteService {
     @Autowired
     SocieteRepository societeRepository;
 
-    @Autowired
-    PrestationRepository prestationRepository;
+
     @Autowired
     ManagerRepository managerRepository;
+
     @Override
+    public void save(List<ManagerVo> managerVos, Long societeId) {
+
+    }
+
+    @Override
+    public SocieteVo getSocieteById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public void deleteManager(Long id) {
+
+    }
+
+    @Override
+    public List<SocieteVo> findAll(int pageId, int size) {
+        return null;
+    }
+
+    @Override
+    public List<SocieteVo> sortBy(String fielName) {
+        return null;
+    }
+
+    @Override
+    public SocieteVo findByNom(String name) {
+        return null;
+    }
+
+    @Override
+    public SocieteVo findByRc(Long rc) {
+        return null;
+    }
+
+    @Override
+    public void calculateMandatDurationInYears(ManagerVo managerVo) {
+
+    }
+
+    @Override
+    public void update(SocieteVo societeVo) {
+
+    }
+    /*@Override
     public List<SocieteVo> getAllSociete() {
         List<Societe> getSocietes = societeRepository.findAll();
         return SocieteConverter.toListVo(societeRepository.findAll());
-    }
+    }*/
 
 
-    @Override
+   /* @Override
     public void calculateMandatDurationInYears(ManagerVo managerVo) {
         if (managerVo == null) {
             throw new IllegalArgumentException("ManagerVo cannot be null");
@@ -66,7 +115,7 @@ public class ISocieteServiceImpl implements ISocieteService {
 
         managerVo.setMandatGerance(result);
     }
-
+*/
 
 
   /* @Override
@@ -115,7 +164,7 @@ public class ISocieteServiceImpl implements ISocieteService {
       }
   }*/
 
-    @Override
+  /*  @Override
     public void save(SocieteVo societeVo) {
         try {
             Societe societe = SocieteConverter.toBo(societeVo);
@@ -129,8 +178,10 @@ public class ISocieteServiceImpl implements ISocieteService {
         }
     }
 
+   */
 
-    @Override
+
+   /* @Override
     public String associateSocietePrestation(long id_Societe, long id) {
         try {
             Societe societe = societeRepository.findById(id_Societe)
@@ -151,7 +202,7 @@ public class ISocieteServiceImpl implements ISocieteService {
             return "An error occurred while updating the association";
         }
     }
-
+  */
 
 
 
@@ -171,10 +222,12 @@ public class ISocieteServiceImpl implements ISocieteService {
               e.printStackTrace();
           }
       }*/
-    @Override
+
+    //creation manager s
+   /* @Override
     public void save(List<ManagerVo> managerVos, Long societeId) {
         try {
-            Societe societe = societeRepository.findById(societeId).get(); // Fetch the Societe object using the provided societeId
+            Societe societe = societeRepository.findById(societeId).get();
             List<Manager> managers = new ArrayList<>();
             for (ManagerVo managerVo : managerVos) {
                 calculateMandatDurationInYears(managerVo);
@@ -184,18 +237,18 @@ public class ISocieteServiceImpl implements ISocieteService {
             }
             managerRepository.saveAll(managers);
         } catch (Exception e) {
-            // Log the exception and other relevant data
+
             System.out.println("An error occurred while saving Manager: " + e.getMessage());
             e.printStackTrace();
         }
     }
+*/
 
 
 
 
 
-
-    @Override
+   /* @Override
     public SocieteVo getSocieteById(Long id) {
         boolean trouve = societeRepository.existsById(id);
         if (!trouve)
@@ -261,7 +314,8 @@ public class ISocieteServiceImpl implements ISocieteService {
                     optionalManager.get().setNameManager(manager.getNameManager());
                     optionalManager.get().setSociete(societe);
                     managerRepository.save(optionalManager.get());
-                }else {
+                }
+                else {
                     Manager managerEnity = ManagerConverter.bo(manager);
                     managerEnity.setSociete(societe);
                     managerRepository.save(managerEnity);
@@ -270,5 +324,5 @@ public class ISocieteServiceImpl implements ISocieteService {
 
         }
 
-    }
+    }*/
 }

@@ -1,4 +1,5 @@
 package ma.maisonSoftware.maisonSoftaware.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -11,6 +12,8 @@ import java.util.Objects;
 
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Prestation implements Serializable {
@@ -41,24 +44,28 @@ public class Prestation implements Serializable {
 
     @Getter
     @Setter
-   /* @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "societe_id")*/
-    @ManyToOne
-    @JoinColumn(name = "societe_id")
-    private Societe societe;
 
-    public Prestation(String namePrestation, List<Etape> etapes, String etat, Societe societe) {
+    @ManyToMany(mappedBy = "prestations",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Client> clients = new ArrayList<>();
+
+    public Prestation(String namePrestation, List<Etape> etapes, String etat) {
+
         this.namePrestation = namePrestation;
         this.etapes = etapes;
         Etat = etat;
-        this.societe = societe;
     }
+    /*
+     @ManyToMany
+    @JoinColumn(name = "client_id")
+     */
 
 
 
 
-
- /*   public Prestation(String namePrestation, List<Etape> etapes) {
+ /*   @ManyToOne
+  private Client client;
+  public Prestation(String namePrestation, List<Etape> etapes) {
         this.namePrestation = namePrestation;
         this.etapes = etapes;
     }*/

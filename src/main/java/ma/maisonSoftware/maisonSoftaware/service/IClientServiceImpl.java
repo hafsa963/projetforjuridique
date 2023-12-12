@@ -1,9 +1,11 @@
 package ma.maisonSoftware.maisonSoftaware.service;
 
 import ma.maisonSoftware.maisonSoftaware.dao.ClientRepository;
+import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientConverter;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
 import ma.maisonSoftware.maisonSoftaware.model.Client;
+import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +13,27 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
 @Transactional
 public class IClientServiceImpl  implements IClientService  {
 
-    private static final Logger logger = LoggerFactory.getLogger(IClientServiceImpl.class);
+     private static final Logger LOGGER = LoggerFactory.getLogger(IClientServiceImpl.class);
+    private static final Logger Logger = LoggerFactory.getLogger(IClientServiceImpl.class);
 
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    PrestationRepository prestationRepository;
 
+    @Autowired
+    IPrestationService prestationService;
 
     @Transactional
    @Override
@@ -31,17 +41,31 @@ public class IClientServiceImpl  implements IClientService  {
         try {
             Client client = ClientConverter.toBo(clientVo);
             Client savedClient = clientRepository.save(client);
+            savedClient.setPrestations(null);
         } catch (DataAccessException e) {
-            logger.error("An error occurred while saving client", e);
+
+            Logger.error("An error occurred while saving client", e);
             throw e;
         }
     }
 
-    @Override
+
+
+   /* @Override
     public List<ClientVo> getAllClient() {
+       // List<Client> getClients = clientRepository.findAll();
+        //return  ClientConverter.toVoList(clientRepository.findAll());
+
         List<Client> getClients = clientRepository.findAll();
-        return  ClientConverter.toListVo(clientRepository.findAll());
-    }
+        return ClientConverter.toVoList(getClients);
+    }*/
+
+   @Override
+    public List<Client> getAllClientsWithAndWithoutPrestations() {
+       return clientRepository.getClientsWithAndWithoutPrestations();
+
+
+   }
 
     @Override
     public ClientVo getClientById(Long id) {
@@ -179,8 +203,38 @@ public class IClientServiceImpl  implements IClientService  {
    }*/
 
 
+    @Transactional
+    public String associateSocietePrestation(long id_client, long id) {
+        try {
+            Client client = clientRepository.findById(id_client)
+                    .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id_client));
+
+            Prestation prestation = prestationRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Prestation not found with id: " + id));
+
+            client.getPrestations().add(prestation);
+            prestation.getClients().add(client);
+
+            clientRepository.save(client);
+
+            LOGGER.info("Client after association: {}", client);
+            LOGGER.info("Prestation after association: {}", prestation);
+
+            return "Client is updated with Prestation successfully";
+        } catch (EntityNotFoundException e) {
+            return "Client or Prestation not found";
+        } catch (Exception e) {
+            LOGGER.error("An error occurred while updating the association", e);
+            throw new RuntimeException("Failed to update the association", e);
+        }
+    }
+
+
+
+
 
 
 
 
 }
+

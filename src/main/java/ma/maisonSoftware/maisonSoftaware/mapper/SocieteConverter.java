@@ -21,7 +21,7 @@ public class SocieteConverter {
           societeVo.setPropriete(societe.getPropriete());
           societeVo.setEtat(societe.getEtat());
           societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
-          societeVo.setPrestationList(PrestationConverter.toVoListPrestation(societe.getPrestations()));
+         // societeVo.setPrestationList(PrestationConverter.toVoListPrestation(societe.getPrestations()));
           return societeVo;
      }
      public static Societe toBo(SocieteVo societeVo){
@@ -39,7 +39,7 @@ public class SocieteConverter {
           toBo.setPropriete(societeVo.getPropriete());
           toBo.setEtat(societeVo.getEtat());
           toBo.setManagers(ManagerConverter.toBoList(societeVo.getManagerVoList()));
-          toBo.setPrestations(PrestationConverter.toBoListPrestation(societeVo.getPrestationList()));
+          //toBo.setPrestations(PrestationConverter.toBoListPrestation(societeVo.getPrestationList()));
           return toBo;
      }
      public static List<SocieteVo> toListVo(List<Societe> listBo) {

@@ -6,8 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ma.maisonSoftware.maisonSoftaware.model.Client;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -44,15 +49,10 @@ public class ManagerVo {
     private String  mandatGerance;
 
 
+    @Getter
+    @Setter
+    @Nullable
+    private Client client;
 
 
-
-
-    public ManagerVo(String nameManager, Date datedebut, Date dateFin, String mandatGerance) {
-
-        this.nameManager = nameManager;
-        Datedebut = datedebut;
-        DateFin = dateFin;
-        this.mandatGerance = mandatGerance;
-    }
 }

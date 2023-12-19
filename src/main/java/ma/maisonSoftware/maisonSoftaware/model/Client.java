@@ -105,9 +105,6 @@ public class Client implements Serializable{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "clients", cascade = CascadeType.ALL)
    List<AttachmentEntity> attachmentEntity;
 
-
-   /* @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clients", cascade = CascadeType.ALL)*/
    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
    @JoinTable(
            name = "CLIENT_PRESTATION",
@@ -116,13 +113,14 @@ public class Client implements Serializable{
    )
     List<Prestation> prestations = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE )
+    private List<Manager> managers = new ArrayList<>();
 
-  /* cascade = { CascadeType.PERSIST, CascadeType.MERGE }
-  @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+    @Column(name = "displayClient")
+    private boolean displayClient;
 
-    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
-    private List<Manager> managers = new ArrayList<>();*/
+
 
 }
 

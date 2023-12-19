@@ -102,4 +102,17 @@ public class PrestationController {
         return new ResponseEntity<>(prestationVofound, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/prestation/Client/{id}")
+    public ResponseEntity<Object> getPrestationsClientByID(@PathVariable(value = "id") Long clientId) {
+        List<String> prestationsClientList = iPrestationService.getPrestationsClientByID(clientId);
+
+        if (prestationsClientList == null || prestationsClientList.isEmpty()) {
+            return new ResponseEntity<>("Prestations don't exist for the given client ID", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(prestationsClientList, HttpStatus.OK);
+    }
+
+
+
 }

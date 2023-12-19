@@ -1,6 +1,7 @@
 package ma.maisonSoftware.maisonSoftaware.mapper;
 
 import ma.maisonSoftware.maisonSoftaware.model.Client;
+import ma.maisonSoftware.maisonSoftaware.model.Manager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,10 @@ public class ClientConverter {
         clientVo.setTypesociete(client.getTypesociete());
         clientVo.setEtat(client.getEtat());
 
+        clientVo.setDisplayClient(client.isDisplayClient());
         clientVo.setAttachment(AttachmentConverter.toVoList(client.getAttachmentEntity()));
         clientVo.setPrestationList(PrestationConverter.toVoListPrestation(client.getPrestations()));
-
+        clientVo.setManagerVos(ManagerConverter.toVoList(client.getManagers()));
 
 
         return clientVo;
@@ -78,10 +80,11 @@ public class ClientConverter {
         clientBo.setPays(clientVo.getPays());
         clientBo.setTypesociete(clientVo.getTypesociete());
         clientBo.setEtat(clientVo.getEtat());
+        clientBo.setDisplayClient(clientVo.isDisplayClient());
 
         clientBo.setAttachmentEntity(AttachmentConverter.toBoList(clientVo.attachment));
         clientBo.setPrestations(PrestationConverter.toBoListPrestation(clientVo.getPrestationList()));
-
+        clientBo.setManagers(ManagerConverter.toBoList(clientVo.getManagerVos()));
 
 
         return clientBo;

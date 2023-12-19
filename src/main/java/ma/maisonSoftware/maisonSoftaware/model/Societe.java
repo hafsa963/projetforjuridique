@@ -51,9 +51,7 @@ public class Societe implements Serializable {
     @Column(name = "etat")
     private String etat ;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE )
-    private List<Manager> managers = new ArrayList<>();
+
 
     /*@JsonIgnore
     @OneToMany(mappedBy = "societe", cascade = CascadeType.REMOVE)
@@ -71,7 +69,7 @@ public class Societe implements Serializable {
         this.cnss = cnss;
         this.propriete = propriete;
         this.etat = etat;
-        this.managers = managers;
+
        // this.prestations = prestations;public void setPrestations(     List<Prestation> prestations
     }
 

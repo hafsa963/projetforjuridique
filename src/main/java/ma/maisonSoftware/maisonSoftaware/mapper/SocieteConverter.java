@@ -20,7 +20,7 @@ public class SocieteConverter {
           societeVo.setCnss(societe.getCnss());
           societeVo.setPropriete(societe.getPropriete());
           societeVo.setEtat(societe.getEtat());
-          societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
+          //societeVo.setManagerVoList(ManagerConverter.toVoList(societe.getManagers()));
          // societeVo.setPrestationList(PrestationConverter.toVoListPrestation(societe.getPrestations()));
           return societeVo;
      }
@@ -38,7 +38,7 @@ public class SocieteConverter {
           toBo.setCnss(societeVo.getCnss());
           toBo.setPropriete(societeVo.getPropriete());
           toBo.setEtat(societeVo.getEtat());
-          toBo.setManagers(ManagerConverter.toBoList(societeVo.getManagerVoList()));
+         // toBo.setManagers(ManagerConverter.toBoList(societeVo.getManagerVoList()));
           //toBo.setPrestations(PrestationConverter.toBoListPrestation(societeVo.getPrestationList()));
           return toBo;
      }

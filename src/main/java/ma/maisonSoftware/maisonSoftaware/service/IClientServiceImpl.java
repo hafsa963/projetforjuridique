@@ -14,10 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -66,6 +64,12 @@ public class IClientServiceImpl  implements IClientService  {
 
 
    }
+    /* @Override
+  public List<Client> getAllClientsWithAndWithoutPrestations(int offset, int pageSize) {
+      Pageable pageable = PageRequest.of(offset / pageSize, pageSize);
+
+      return clientRepository.getClientsWithAndWithoutPrestations(pageable);
+  }*/
 
     @Override
     public ClientVo getClientById(Long id) {
@@ -118,13 +122,27 @@ public class IClientServiceImpl  implements IClientService  {
             client.setPays(clientVo.getPays());
             client.setTypesociete(clientVo.getTypesociete());
             client.setEtat(clientVo.getEtat());
-
+            clientRepository.save(client);
 
 
         }
 
 
     }
+
+    @Override
+    public void updateClient(Long clientId) {
+        Optional<Client> optionalClient = clientRepository.findById(clientId);
+
+        if (optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setDisplayClient(false);
+            clientRepository.save(client);
+        } else {
+
+        }
+    }
+
 
 
    /* @Override

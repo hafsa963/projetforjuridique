@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ma.maisonSoftware.maisonSoftaware.model.Client;
+import ma.maisonSoftware.maisonSoftaware.model.Manager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +70,16 @@ public class ClientVo {
 
     List<AttachmentVo> attachment;
     List<PrestationVo>  prestationList = new ArrayList<>();
+    List<ManagerVo> managerVos = new ArrayList<>();
+
+     private boolean displayClient;
 
 
-    public ClientVo(String rs, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String ctNum, String qualite, String adresse, String complement, String codepostal, String ville, String coderegion, String pays, String tel, String telcopie, String email, String cmt, String etat, String typesociete) {
+
+
+
+    public ClientVo(String rs, String forme, String capitale, String siege, Long rc, Long i_f, Long ice, Long ip, Long cnss, String propriete, String ctNum, String qualite, String adresse, String complement, String codepostal, String ville, String coderegion, String pays, String tel, String telcopie, String email, String cmt, String etat, String typesociete  , boolean displayClient  ) {
+
         this.rs = rs;
         this.forme = forme;
         this.capitale = capitale;
@@ -96,11 +104,6 @@ public class ClientVo {
         this.cmt = cmt;
         this.etat = etat;
         this.typesociete = typesociete;
-
+       this.displayClient = displayClient;
     }
-
-
 }
-
-    /*   this.attachment = attachment;
-        this.prestationList = prestationList;*/

@@ -4,8 +4,11 @@ package ma.maisonSoftware.maisonSoftaware.controller.rest;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientConverter;
 import ma.maisonSoftware.maisonSoftaware.mapper.ClientVo;
+import ma.maisonSoftware.maisonSoftaware.mapper.ManagerVo;
+import ma.maisonSoftware.maisonSoftaware.mapper.TypeSocieteVo;
 import ma.maisonSoftware.maisonSoftaware.model.Client;
 import ma.maisonSoftware.maisonSoftaware.service.IClientService;
+import ma.maisonSoftware.maisonSoftaware.service.IManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +30,25 @@ public class ClientController {
 
     @Autowired
     IClientService iClientService;
+
+    @Autowired
+    IManagerService iManagerService;
     /*@GetMapping(value = "/admin/client", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public List<ClientVo> getAllClient()
     {
         return iClientService.getAllClient();
     }
 */
-
+   /* @GetMapping("/admin/client")
+    public ResponseEntity<List<Client>> getAllClientsWithAndWithoutPrestations(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        // Calculate offset based on page and pageSize to fetch the appropriate subset of data
+        int offset = (page - 1) * pageSize;
+        List<Client> clients = iClientService.getAllClientsWithAndWithoutPrestations(offset, pageSize);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
+    }*/
 
     @GetMapping("/admin/client")
     public ResponseEntity<List<Client>> getClientsWithAndWithoutPrestations() {
@@ -58,15 +73,23 @@ public class ClientController {
         }
     }
 
-    @PutMapping(value = "/admin/updateSociete/{id}")
+    @PutMapping(value = "/admin/updateClient/{id}")
     public ResponseEntity<Object> updateClient(@PathVariable(name = "id") Long clientid,@Valid @RequestBody ClientVo clientVo) {
         ClientVo clientFound = iClientService.getClientById(clientid);
         if (clientFound == null)
             return new ResponseEntity<>("Client doen't exist", HttpStatus.OK);
         clientVo.setId(clientid);
-        iClientService.save(clientVo);
+        iClientService.update(clientVo);
+        //iClientService.save(clientVo);
         return ResponseEntity.ok().body(new ApiResponse());
     }
+    @PutMapping(value = "/admin/updateClientUser/{id}")
+    public ResponseEntity<Object> updateClientUser(@PathVariable(name = "id") Long clientId) {
+         iClientService.updateClient(clientId);
+        return ResponseEntity.ok().body("DisplayClient updated successfully");
+    }
+
+
 
     @DeleteMapping(value = "/admin/deleteclient/{id}")
     public ResponseEntity<Object> deleteclient(@PathVariable(name = "id") Long  clientvoid) {
@@ -191,5 +214,35 @@ public class ClientController {
         }
     }
 
+    @PostMapping(value = "/admin/createManager")
+    public ResponseEntity<Object> CreateManager(@Valid @RequestBody ManagerVo managerVo) {
+        try {
+            logger.info("Received managerVo data: {}", managerVo);
+            iManagerService.save(managerVo);
+            return new ResponseEntity<>("managerVo created successfully", HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            return new ResponseEntity<>("Failed to create managerVo: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    @GetMapping(value = "/admin/getall", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public List<ManagerVo> getAllManager()
+    {
+        return iManagerService.getAllManager();
+    }
+
+    @GetMapping(value = "/admin/getallManagers",
+            produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public List<ManagerVo> findAllMangers()
+    {
+        return iManagerService.findAllMangers();
+    }
+
+    @PutMapping(value = "/admin/updatemanager/{id}")
+    public ManagerVo updatemanager(@PathVariable(name = "id") Long managerId, @Valid @RequestBody ManagerVo managerVo) {
+        managerVo.setId(managerId);
+          iManagerService.update(managerVo);
+        return managerVo;
+
+    }
 }

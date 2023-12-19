@@ -4,16 +4,14 @@ import ma.maisonSoftware.maisonSoftaware.dao.ClientRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.EtapeRepository;
 import ma.maisonSoftware.maisonSoftaware.dao.PrestationRepository;
 import ma.maisonSoftware.maisonSoftaware.mapper.*;
-import ma.maisonSoftware.maisonSoftaware.model.Client;
 import ma.maisonSoftware.maisonSoftaware.model.Etape;
 import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -139,6 +137,19 @@ public class IPrestationServiceImpl implements IPrestationService {
     @Override
     public  PrestationVo getalletapeByPrestation(long id){
         return  PrestationConverter.toVo(prestationRepository.findByid(id));
+    }
+
+    @Override
+    public List<String> getPrestationsClientByID(long idclient) {
+        List<String> prestationsNames = prestationRepository.getPrestationsClientByID(idclient);
+
+
+        if (prestationsNames == null || prestationsNames.isEmpty()) {
+
+            return Collections.emptyList();
+        }
+
+        return prestationsNames;
     }
 
 

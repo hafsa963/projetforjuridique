@@ -6,6 +6,7 @@ import ma.maisonSoftware.maisonSoftaware.model.Etape;
 import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -16,10 +17,6 @@ public interface PrestationRepository extends JpaRepository<Prestation,Long> {
     )
    Prestation getPrestationByIdEtape(long id);
 
-    //@Query(value = "SELECT new ma.maisonSoftware.maisonSoftaware.mapper.PrestationVo(p.namePrestation, p.etat, p.etapeDtoList) FROM Prestation p",
-   /*@Query(value = " SELECT ID,NAME_Prestation FROM Prestation ",
-           nativeQuery = true)
-   List<PrestationVo> getAllPrestation();*/
 
     @Query(value = " SELECT * FROM Prestation ",
             nativeQuery = true)
@@ -30,5 +27,17 @@ public interface PrestationRepository extends JpaRepository<Prestation,Long> {
 
 
     Prestation findByid(long id);
+
+
+
+    @Query(
+            value = "SELECT P.NAME_PRESTATION " +
+                    "FROM PRESTATION P " +
+                    "JOIN CLIENT_PRESTATION CP ON P.ID = CP.PRESTATION_ID " +
+                    "WHERE CP.CLIENT_ID = :clientId",
+            nativeQuery = true
+    )
+    List<String> getPrestationsClientByID(@Param("clientId") long clientId);
+
 }
 

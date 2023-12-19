@@ -42,7 +42,7 @@ public class AuthenticationController {
 
         try {
 
-            UserVo userVo1 =  userService.findByUsername(userVo.getUsername());
+            UserVo userVo1 = userService.findByUsername(userVo.getUsername());
             if (!userVo1.isEnabled()) {
                 throw new Exception("user not enable");
             }
@@ -64,6 +64,7 @@ public class AuthenticationController {
         }
 
     }
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserVo userVo) {
         if (userService.existsByUsername(userVo.getUsername())) {
@@ -90,14 +91,14 @@ public class AuthenticationController {
     @GetMapping("/getCurrentUserResponseEntity")
     public ResponseEntity<Object> getCurrentUserResponseEntity(Authentication authentication) {
 
-        if(authentication == null || authentication instanceof AnonymousAuthenticationToken)
-        {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return ResponseEntity.badRequest().body("user not connected");
         }
         Object principal = authentication.getPrincipal();
-        return  ResponseEntity.ok(principal);
+        return ResponseEntity.ok(principal);
 
     }
+
     @GetMapping("/getname")
     public ResponseEntity<Object> getname(@RequestParam String username) {
         UserDetails userDetails = userService.loadUserByUsername(username);
@@ -109,14 +110,14 @@ public class AuthenticationController {
         String fullUsername = userDetails.getUsername();
         return ResponseEntity.ok("User is found successfully! Full Username: " + fullUsername);
     }
+
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";
     }
-
 
 
 }

@@ -33,5 +33,6 @@ public interface IPrestationService {
 
     PrestationVo getalletapeByPrestation(long id);
 
- }
+    List<String>  getPrestationsClientByID(long idclient);
+}
 

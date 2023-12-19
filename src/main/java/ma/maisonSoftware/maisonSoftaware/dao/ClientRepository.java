@@ -10,23 +10,36 @@ import java.util.List;
 
 public interface ClientRepository extends JpaRepository<Client,Long> {
 
-   /* @Query("SELECT c FROM Client c LEFT JOIN c.prestations p WHERE p IS NULL")
-    List<Client> getClientsWithoutPrestations();
+    @Query(
+            value = " SELECT\n" +
+                    "    CLIENT.ID_CLIENT, CLIENT.ADRESSE, CLIENT.CAPITALE_SOCIETE, CLIENT.CMT, CLIENT.CNSS_SOCIETE, CLIENT.CODEPOSTAL, CLIENT.CODEREGION, CLIENT.COMPLEMENT, CLIENT.CT_NUM, CLIENT.EMAIL, CLIENT.ETAT, CLIENT.FORME_SOCIETE,\n" +
+                    "    CLIENT.IF_SOCIETE, CLIENT.ICE_SOCIETE, CLIENT.IP_SOCIETE, CLIENT.PAYS, CLIENT.QUALITE,\n" +
+                    "    CLIENT.RC_SOCIETE, CLIENT.RAISON_SOCIALE, CLIENT.SEIGE_SOCIETE, CLIENT.TEL, CLIENT.TELCOPIE, CLIENT.NOM_TYPE, CLIENT.VILLE,\n" +
+                    "    CLIENT.PROPRIETE_SOCIETE, CLIENT.DISPLAY_CLIENT,\n" +
+                    "    MAX(CLIENT_PRESTATION.CLIENT_ID) AS PRESTATION_CLIENT_ID,\n" +
+                    "    MAX(CLIENT_PRESTATION.PRESTATION_ID) AS PRESTATION_PRESTATION_ID\n" +
+                    "FROM\n" +
+                    "    CLIENT\n" +
+                    "LEFT JOIN\n" +
+                    "    CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID\n" +
+                    "WHERE\n" +
+                    "    CLIENT.DISPLAY_CLIENT = true\n" +
+                    "GROUP BY\n" +
+                    "    CLIENT.ID_CLIENT, CLIENT.ADRESSE, CLIENT.CAPITALE_SOCIETE, CLIENT.CMT, CLIENT.CNSS_SOCIETE, CLIENT.CODEPOSTAL, CLIENT.CODEREGION, CLIENT.COMPLEMENT, CLIENT.CT_NUM, CLIENT.EMAIL, CLIENT.ETAT, CLIENT.FORME_SOCIETE,\n" +
+                    "    CLIENT.IF_SOCIETE, CLIENT.ICE_SOCIETE, CLIENT.IP_SOCIETE, CLIENT.PAYS, CLIENT.QUALITE,\n" +
+                    "    CLIENT.RC_SOCIETE, CLIENT.RAISON_SOCIALE, CLIENT.SEIGE_SOCIETE, CLIENT.TEL, CLIENT.TELCOPIE, CLIENT.NOM_TYPE, CLIENT.VILLE,\n" +
+                    "    CLIENT.PROPRIETE_SOCIETE;\n",
 
-    @Query("SELECT c FROM Client c INNER JOIN c.prestations p WHERE p IS NOT NULL")
-    List<Client> getClientsWithPrestations();*/
-   @Query(
-
-           value = "  SELECT DISTINCT CLIENT.*, CLIENT_PRESTATION.CLIENT_ID AS prestation_client_id, CLIENT_PRESTATION.PRESTATION_ID AS prestation_prestation_id\n" +
-                   "FROM CLIENT\n" +
-                   "LEFT JOIN CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID\n" +
-                   "WHERE CLIENT_PRESTATION.CLIENT_ID IS NULL OR CLIENT_PRESTATION.CLIENT_ID IS NOT NULL;",
             nativeQuery = true
-   )
-   List<Client> getClientsWithAndWithoutPrestations();
-    //value = "SELECT * FROM CLIENT LEFT JOIN CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID WHERE CLIENT_PRESTATION.CLIENT_ID IS NOT NULL",
-    //value = "SELECT * FROM CLIENT LEFT JOIN CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID WHERE CLIENT_PRESTATION.CLIENT_ID IS NULL OR CLIENT_PRESTATION.CLIENT_ID IS NOT NULL",
-    // SELECT * FROM CLIENT LEFT JOIN CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID WHERE CLIENT_PRESTATION.CLIENT_ID IS NULL OR CLIENT_PRESTATION.CLIENT_ID IS NOT NULL
+    )
+    List<Client> getClientsWithAndWithoutPrestations();
+   /* SELECT DISTINCT CLIENT.*, CLIENT_PRESTATION.CLIENT_ID AS prestation_client_id, CLIENT_PRESTATION.PRESTATION_ID AS prestation_prestation_id\n" +
+            "FROM CLIENT\n" +
+            "LEFT JOIN CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID\n" +
+            "WHERE CLIENT_PRESTATION.CLIENT_ID IS NULL OR CLIENT_PRESTATION.CLIENT_ID IS NOT NULL;*/
+
+
+
     Client findByRs(String rs);
     Client findByRc(Long rc);
      // Client findByi_f(Long i_f);
@@ -40,7 +53,6 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
      Client findByCapitale(String capitale);
      Client findBySiege(String siege);
     Client findBytypesociete(String typesociete);
-    //Client findByI_F(Long i_f);
 
 
 

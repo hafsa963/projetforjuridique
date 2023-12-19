@@ -14,9 +14,13 @@ public interface IClientService {
 
     //List<ClientVo> getAllClients();
 
+    //List<Client> getAllClientsWithAndWithoutPrestations(int offset, int pageSize);
+
     ClientVo getClientById(Long id);
     void delete(Long id);
     ClientVo findByRaisonsociale(String rs);
+
+    void updateClient(Long clientId);
 
     ClientVo findByRs(String rs);
 

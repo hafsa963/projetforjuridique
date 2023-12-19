@@ -13,6 +13,8 @@ public class ManagerConverter {
         managerVo.setDatedebut(bo.getDatedebut());
         managerVo.setDateFin(bo.getDateFin());
         managerVo.setMandatGerance(bo.getMandatGerance());
+        managerVo.setClient(bo.getClient());
+
 
 //        managerVo.setSocieteVo(SocieteConverter.toVo(bo.getSociete()));
         return managerVo;
@@ -24,6 +26,7 @@ public class ManagerConverter {
           manager.setDatedebut(vo.getDatedebut());
           manager.setDateFin(vo.getDateFin());
           manager.setMandatGerance(vo.getMandatGerance());
+          manager.setClient(vo.getClient());
 
 //        manager.setSociete(SocieteConverter.toBo(vo.getSocieteVo()));
         return manager;

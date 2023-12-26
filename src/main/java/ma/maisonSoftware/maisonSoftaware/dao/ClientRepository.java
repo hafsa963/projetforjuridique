@@ -33,27 +33,21 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
             nativeQuery = true
     )
     List<Client> getClientsWithAndWithoutPrestations();
-   /* SELECT DISTINCT CLIENT.*, CLIENT_PRESTATION.CLIENT_ID AS prestation_client_id, CLIENT_PRESTATION.PRESTATION_ID AS prestation_prestation_id\n" +
-            "FROM CLIENT\n" +
-            "LEFT JOIN CLIENT_PRESTATION ON CLIENT.ID_CLIENT = CLIENT_PRESTATION.CLIENT_ID\n" +
-            "WHERE CLIENT_PRESTATION.CLIENT_ID IS NULL OR CLIENT_PRESTATION.CLIENT_ID IS NOT NULL;*/
-
 
 
     Client findByRs(String rs);
     Client findByRc(Long rc);
-     // Client findByi_f(Long i_f);
+    // Client findByi_f(Long i_f);
 
-     Client findByCnss(Long cnss);
-     Client findByIce(Long ice);
+    Client findByCnss(Long cnss);
+    Client findByIce(Long ice);
     Client findByIp(Long ip);
     Client findByPropriete(String propriete);
     Client findByCtNum(String ctNum);
     Client findByForme(String forme);
-     Client findByCapitale(String capitale);
-     Client findBySiege(String siege);
+    Client findByCapitale(String capitale);
+    Client findBySiege(String siege);
     Client findBytypesociete(String typesociete);
-
 
 
 

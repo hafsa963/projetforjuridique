@@ -8,6 +8,8 @@ import ma.maisonSoftware.maisonSoftaware.jwt.JwtUtils;
 import ma.maisonSoftware.maisonSoftaware.service.IUserService;
 import ma.maisonSoftware.maisonSoftaware.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -76,17 +78,15 @@ public class AuthenticationController {
     }
 
 
-    @GetMapping("/getUserName")
-    public ResponseEntity<Object> getUsername(@RequestParam String username) {
-        UserDetails userDetails = userService.loadUserByUsername(username);
-
-        if (userDetails == null) {
-            return ResponseEntity.badRequest().body("Error: User not found!");
-        }
-
-        String fullUsername = userDetails.getUsername();
-        return ResponseEntity.ok("User is found successfully! Full Username: " + fullUsername);
+    @GetMapping(value = "getUserName", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUsername(@RequestParam String username) {
+        UserVo uservoDetail = (UserVo) userService.loadUserByUsername(username);
+        if (uservoDetail == null)
+            return new ResponseEntity<>("societe ice doen't exist", HttpStatus.OK);
+        return new ResponseEntity<>(uservoDetail, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/getCurrentUserResponseEntity")
     public ResponseEntity<Object> getCurrentUserResponseEntity(Authentication authentication) {
@@ -108,7 +108,7 @@ public class AuthenticationController {
         }
 
         String fullUsername = userDetails.getUsername();
-        return ResponseEntity.ok("User is found successfully! Full Username: " + fullUsername);
+        return ResponseEntity.ok().body("DisplayClient updated successfully");
     }
 
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {

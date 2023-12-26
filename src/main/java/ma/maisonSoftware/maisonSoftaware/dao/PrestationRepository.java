@@ -39,5 +39,20 @@ public interface PrestationRepository extends JpaRepository<Prestation,Long> {
     )
     List<String> getPrestationsClientByID(@Param("clientId") long clientId);
 
+
+
+    @Query(value = "SELECT DISTINCT PRESTATION. * FROM PRESTATION\n" +
+            "JOIN CLIENT_PRESTATION ON PRESTATION.ID = CLIENT_PRESTATION.PRESTATION_ID\n" +
+            "JOIN CLIENT ON CLIENT_PRESTATION.CLIENT_ID = CLIENT.ID_CLIENT\n" +
+            "WHERE CLIENT.RC_SOCIETE = ? AND CLIENT.RAISON_SOCIALE = ? AND CLIENT.PROPRIETE_SOCIETE = ?",
+            nativeQuery = true)
+    List<Prestation> findByUniqueAttributes(
+            Long rc,
+            String rs,
+            String propriete);
+
+
+
+
 }
 

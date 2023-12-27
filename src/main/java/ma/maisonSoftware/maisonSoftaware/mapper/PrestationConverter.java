@@ -4,6 +4,7 @@ import ma.maisonSoftware.maisonSoftaware.model.Prestation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class PrestationConverter {
 
@@ -21,6 +22,9 @@ public class PrestationConverter {
         vo.setEtapeDtoList(EtapeConverter.toVoList(bo.getEtapes()));
         return vo;
     }
+
+
+
 
     public static Prestation toBo (PrestationVo vo){
 

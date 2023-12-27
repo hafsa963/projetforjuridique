@@ -152,6 +152,63 @@ public class IPrestationServiceImpl implements IPrestationService {
         return prestationsNames;
     }
 
+    @Override
+    public List<String> findByUniqueRC(long rc){
+      List<String> prestationsNamesClient = prestationRepository.findByRC(rc);
+
+
+        if (prestationsNamesClient == null || prestationsNamesClient.isEmpty()) {
+
+            return Collections.emptyList();
+        }
+
+        return prestationsNamesClient;
+    }
+
+    @Override
+    public List<String> findByRcAndRsAndPropriete(long rc, String rs, String propriete) {
+        List<String> prestationsNamesClient = prestationRepository.findByUniqueAttributes(rc, rs, propriete);
+
+
+        if (prestationsNamesClient == null || prestationsNamesClient.isEmpty()) {
+
+            return Collections.emptyList();
+        }
+
+        return prestationsNamesClient;
+    }
+
+    @Override
+    public List<String> findByRS(String rs) {
+        List<String> prestationsNamesClient = prestationRepository.findByRS(rs);
+
+
+        if (prestationsNamesClient == null || prestationsNamesClient.isEmpty()) {
+
+            return Collections.emptyList();
+        }
+
+        return prestationsNamesClient;
+    }
+
+    @Override
+    public List<String> findByPropriete(String propriete) {
+        List<String> prestationsNamesClient = prestationRepository.findBypropriete(propriete);
+
+
+        if (prestationsNamesClient == null || prestationsNamesClient.isEmpty()) {
+
+            return Collections.emptyList();
+        }
+
+        return prestationsNamesClient;
+    }
+
+    @Override
+    public List<EtapeVo> getEtapeByIdPrestation(long id) {
+        return  EtapeConverter.toVoList(etapeRepository.getEtapeByIdPrestation(id));
+    }
+
 
 
 }

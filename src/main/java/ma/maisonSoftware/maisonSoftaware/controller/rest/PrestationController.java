@@ -113,6 +113,56 @@ public class PrestationController {
         return new ResponseEntity<>(prestationsClientList, HttpStatus.OK);
     }
 
+   @GetMapping("/prestation/Clientpresta/{rc}")
+   public ResponseEntity <List<String>> findByUniqueRC(@PathVariable(value = "rc") Long rc) {
+       List<String> prestationForClients = iPrestationService.findByUniqueRC(rc);
+
+       if (prestationForClients.isEmpty()) {
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
+
+       return new ResponseEntity<>(prestationForClients, HttpStatus.OK);
+   }
+    @GetMapping("/prestation/Client/presta")
+    public ResponseEntity <List<String>> findByRcAndRsAndPropriete(@RequestParam(value = "rc") Long rc, @RequestParam(value = "rs") String rs, @RequestParam(value = "propriete") String propriete)  {
+        List<String> prestationForClients = iPrestationService.findByRcAndRsAndPropriete(rc, rs, propriete);
+
+        if (prestationForClients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(prestationForClients, HttpStatus.OK);
+    }
+
+    @GetMapping("/prestation/Client/RS")
+    public ResponseEntity <List<String>> findByRS(@RequestParam(value = "rs") String rs)  {
+        List<String> prestationForClients = iPrestationService.findByRS(rs);
+
+        if (prestationForClients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(prestationForClients, HttpStatus.OK);
+    }
+    @GetMapping("/prestation/Client/propriete")
+    public ResponseEntity <List<String>> findByPropriete(@RequestParam(value = "propriete") String propriete)  {
+        List<String> prestationForClients = iPrestationService.findByPropriete(propriete);
+
+        if (prestationForClients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(prestationForClients, HttpStatus.OK);
+    }
+
+    @GetMapping("/prestation/Client/Etape")
+      public List<EtapeVo> findByEtape(@RequestParam(value = "id") Long id)  {
+
+        return iPrestationService.getEtapeByIdPrestation(id);
+
+
+
+    }
 
 
 

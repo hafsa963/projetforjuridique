@@ -55,20 +55,6 @@ public class Prestation implements Serializable {
         this.etapes = etapes;
         Etat = etat;
     }
-    /*
-     @ManyToMany
-    @JoinColumn(name = "client_id")
-     */
-
-
-
-
- /*   @ManyToOne
-  private Client client;
-  public Prestation(String namePrestation, List<Etape> etapes) {
-        this.namePrestation = namePrestation;
-        this.etapes = etapes;
-    }*/
 
 
 

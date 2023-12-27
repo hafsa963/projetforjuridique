@@ -34,5 +34,16 @@ public interface IPrestationService {
     PrestationVo getalletapeByPrestation(long id);
 
     List<String>  getPrestationsClientByID(long idclient);
+
+    List<String> findByUniqueRC(long rc);
+    List<String> findByRcAndRsAndPropriete(long rc, String rs, String propriete);
+
+    List<String> findByRS(String rs);
+
+
+    List<String> findByPropriete(String propriete);
+
+
+    List<EtapeVo> getEtapeByIdPrestation(long id);
 }
 

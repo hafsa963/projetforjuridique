@@ -41,16 +41,34 @@ public interface PrestationRepository extends JpaRepository<Prestation,Long> {
 
 
 
-    @Query(value = "SELECT DISTINCT PRESTATION. * FROM PRESTATION\n" +
+    @Query(value = "SELECT  ID,NAME_PRESTATION, PRESTATION.ETAT  FROM PRESTATION\n" +
             "JOIN CLIENT_PRESTATION ON PRESTATION.ID = CLIENT_PRESTATION.PRESTATION_ID\n" +
             "JOIN CLIENT ON CLIENT_PRESTATION.CLIENT_ID = CLIENT.ID_CLIENT\n" +
             "WHERE CLIENT.RC_SOCIETE = ? AND CLIENT.RAISON_SOCIALE = ? AND CLIENT.PROPRIETE_SOCIETE = ?",
             nativeQuery = true)
-    List<Prestation> findByUniqueAttributes(
+    List<String>  findByUniqueAttributes(
             Long rc,
             String rs,
             String propriete);
 
+
+
+    @Query(value = "SELECT ID, NAME_PRESTATION, PRESTATION.ETAT FROM PRESTATION  JOIN CLIENT_PRESTATION ON PRESTATION.ID = CLIENT_PRESTATION.PRESTATION_ID  JOIN CLIENT ON CLIENT_PRESTATION.CLIENT_ID = CLIENT.ID_CLIENT WHERE CLIENT.RC_SOCIETE =:rc ",
+            nativeQuery = true)
+    List<String>  findByRC(Long rc);
+
+ @Query(value = "SELECT ID, NAME_PRESTATION, PRESTATION.ETAT FROM PRESTATION  JOIN CLIENT_PRESTATION ON PRESTATION.ID = CLIENT_PRESTATION.PRESTATION_ID  JOIN CLIENT ON CLIENT_PRESTATION.CLIENT_ID = CLIENT.ID_CLIENT WHERE CLIENT.RAISON_SOCIALE =:rs ",
+         nativeQuery = true)
+   List<String>  findByRS(String rs);
+ @Query(value = "SELECT ID, NAME_PRESTATION, PRESTATION.ETAT FROM PRESTATION  JOIN CLIENT_PRESTATION ON PRESTATION.ID = CLIENT_PRESTATION.PRESTATION_ID  JOIN CLIENT ON CLIENT_PRESTATION.CLIENT_ID = CLIENT.ID_CLIENT WHERE CLIENT.PROPRIETE_SOCIETE =:propriete ",
+         nativeQuery = true)
+   List<String>  findBypropriete(String propriete);
+
+    @Query(
+            value = "SELECT * FROM PRESTATION WHERE PRESTATION_ID=?",
+            nativeQuery = true
+    )
+    Etape getETAPEByIdPRESTATION(long id);
 
 
 
